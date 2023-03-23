@@ -1,45 +1,26 @@
-:root {
-  --main-color: var(--bs-blue);
-  --main-color-hover: rgb(104, 117, 217, 0.2);
-  --track-color: #ddd;
-  --mark-color: #aaaaaa;
-}
-
-.intensity-slider-container {
-  min-height: 50px;
-}
-
 .intensity-slider {
-  /* max width of your slider */
+  height: 46px;
   max-width: 300px;
-  /* Optional: Only If you want to center your slider in the page */
-  margin: auto;
+  margin: 1rem 0.5rem 0 0.5rem;
   width: 100%;
 }
 
 .intensity-slider-track {
-  /* Top value to align your track to the center of your thumb */
   top: 8px;
-  /* thickness of the track */
   height: 4px;
- /* default color of your track */
   background: var(--track-color);
 }
 
 .intensity-slider-track.intensity-slider-track-1 {
-  /* color of the track before the thumb */
   background: var(--main-color);
 }
 
 .intensity-slider-thumb {
   cursor: pointer;
-  /*color for the thumb */
   background: var(--bs-blue);
-  /* shape of the thumb: circle */
   width: 30px;
   height: 30px;
   border-radius: 100%;
-  /* remove default outline when selected */
   outline: none;
   text-align: center;
   display: flex;
@@ -55,9 +36,8 @@
 
 .intensity-slider-marks {
   cursor: pointer;
-  top: 6px;
+  top: 3px;
   width: 3px;
-  height: 10px;
-  /* transform: translateX(15px); */
+  height: 15px;
   background-color: var(--bs-gray-600);
 }

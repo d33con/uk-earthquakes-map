@@ -1,19 +1,15 @@
 import Button from 'react-bootstrap/Button'
-import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Stack from 'react-bootstrap/Stack';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react"
 import IntensitySlider from './IntensitySlider';
 
 export default function FilterSection(props) {
   return (
     <>   
-      <Row className="filter-section mb-5">
-        <hr />
-        <h4 className="text-center">Filter by date</h4>
-        <Col>
+      <Col className="border-right">
+        <h4 className="text-center color-main mb-3">Filter by date</h4>
+        <div className="d-flex justify-content-around">        
           <DatePicker
             selected={new Date(props.startDate)}
             onChange={(date) => props.setStartDate(date.toISOString().split("T")[0])}
@@ -25,8 +21,6 @@ export default function FilterSection(props) {
             dateFormat="dd/MM/yyyy"
             withPortal
           />
-        </Col>
-        <Col>      
           <DatePicker
             selected={new Date(props.endDate)}
             onChange={(date) => props.setEndDate(date.toISOString().split("T")[0])}
@@ -38,29 +32,34 @@ export default function FilterSection(props) {
             dateFormat="dd/MM/yyyy"
             withPortal
           />
-        </Col>
-        <Col>      
+        </div>
+        <div className="mt-3 text-center">        
           <Button onClick={props.resetFilters}>Reset</Button>  
-        </Col>
-      </Row>
-      <Row className="mt-5 mb-5">
-        <hr />
-        <h4 className="text-center">Filter by location</h4>
-        <Stack direction="horizontal" gap={3}>  
+        </div>
+      </Col>
+      <Col className="border-right">
+        <h4 className="text-center color-main mb-3">Filter by location</h4>
+        <div className="d-flex justify-content-around">  
           <Button onClick={props.showLandQuakes}>Show on-shore quakes</Button>    
           <Button onClick={props.showSeaQuakes}>Show off-shore quakes</Button>
+        </div>
+        <div className="mt-3 text-center">
           <Button onClick={props.showSeaAndLandQuakes}>Show both</Button>
-        </Stack>    
-      </Row>
-      <Row className="intensity-slider-container mb-5">
-        <hr />
-        <h4 className="text-center">Filter by intensity</h4>
-        <Col xs={{ span: 4, offset: 4 }}>        
+        </div>    
+      </Col>
+      <Col>      
+        <h4 className="text-center color-main mb-3">Filter by intensity</h4>
+        <div className="d-flex flex-row justify-content-center align-items-center">
+          <small className="font-weight-light">Min</small>        
           <IntensitySlider
             intensity={props.intensity}
             handleSetIntensity={props.handleSetIntensity} />
-        </Col>
-      </Row>
+          <small className="font-weight-light">Max</small>
+        </div>
+        <div className="text-center">
+          <Button onClick={props.resetIntensitySlider}>Reset</Button>
+        </div>
+      </Col>
     </>
   )
 }

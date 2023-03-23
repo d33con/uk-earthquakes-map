@@ -18,9 +18,7 @@ export default function App() {
   const [endDate, setEndDate] = useState("2022-12-31")
   const [intensity, setIntensity] = useState([0, 6])
 
-  useEffect(() => {
-    setDataset(data.map(d => ({id: uuidv4(), ...d})))
-  }, [])
+  useEffect(() => (resetFilters()), [])
 
   function resetFilters() {
     setDataset(data.map(d => ({id: uuidv4(), ...d})))
@@ -56,30 +54,38 @@ export default function App() {
     setDataset(newDataset)
   }
 
+  function resetIntensitySlider() {
+    setIntensity([0, 6])
+    const newDataset = dataset.filter(d => (d.ml >= 0 && d.ml <= 6))
+    setDataset(newDataset)
+  }
+
   return (
-    <Container fluid>
-      <Row>
-        <h1 className="text-center">Earthquakes in the UK 2022</h1>
-      </Row>
-      <FilterSection
-        resetFilters={resetFilters}
-        showSeaQuakes={showSeaQuakes}
-        showLandQuakes={showLandQuakes}
-        showSeaAndLandQuakes={showSeaAndLandQuakes}
-        startDate={startDate}
-        setStartDate={handleStartDateChange}
-        endDate={endDate}
-        setEndDate={handleEndDateChange}
-        intensity={intensity}
-        handleSetIntensity={handleSetIntensity} />    
-      <Row>
+    <Container fluid className="main-container">
+      <Row className="title-section p-4">
+        <h1 className="text-center color-main pb-4">Earthquakes in the UK 2022</h1>
         <hr />
-        <h3 className="text-center">{`Showing ${dataset.length} of ${data.length} total earthquakes`}</h3>
-        <div className="text-center">        
-          <Button variant="secondary" onClick={resetFilters}>Reset</Button>
-        </div>
       </Row>
-      <Row className="mt-5 mb-5">
+      <Row className="filter-section ps-4 pe-4 pb-4">
+        <FilterSection
+          resetFilters={resetFilters}
+          showSeaQuakes={showSeaQuakes}
+          showLandQuakes={showLandQuakes}
+          showSeaAndLandQuakes={showSeaAndLandQuakes}
+          startDate={startDate}
+          setStartDate={handleStartDateChange}
+          endDate={endDate}
+          setEndDate={handleEndDateChange}
+          intensity={intensity}
+          handleSetIntensity={handleSetIntensity}
+          resetIntensitySlider={resetIntensitySlider} />
+        <h5 className="text-center color-main mt-4">{`Showing ${dataset.length} of ${data.length} total earthquakes`}</h5>
+        <div className="text-center mb-4">        
+          <Button variant="outline-secondary" onClick={resetFilters}>Show all</Button>
+        </div>
+        <hr />
+      </Row>  
+      <Row className="mb-4">
         <Col xs={6}>
           <MapContainer center={position} zoom={6} scrollWheelZoom={false}>
           <TileLayer
@@ -99,11 +105,12 @@ export default function App() {
               key={point.id}
               >
               <Tooltip>
-                <div>{format(new Date(point.date), 'dd/MM/yyyy')}</div>
-                <div>{point.time.split(":").slice(0,2).join(":")}</div>
-                <div>{point.locality}{point.county && ` - ${point.county}`}</div>
-                <div>{point.ml}</div>
-                <div>{point.depth}</div>
+                <h5 className="color-main text-center">Intensity: <span className="font-weight-bold">{point.ml}</span></h5>
+                <hr />
+                <div>Date: <span className="font-weight-bold">{format(new Date(point.date), 'dd/MM/yyyy')}</span></div>
+                <div>Time: <span className="font-weight-bold">{point.time.split(":").slice(0,2).join(":")}</span></div>
+                <div>Location: <span className="font-weight-bold">{point.locality}{point.county && `, ${point.county}`}</span></div>
+                <div>Depth: <span className="font-weight-bold">{point.depth} km</span></div>
               </Tooltip>
             </Marker>
             ))}
@@ -112,6 +119,9 @@ export default function App() {
         <Col xs={6}>        
           <DisplayTable dataset={dataset} />
         </Col>
+      </Row>
+      <Row>
+        <p as="a" className="text-center"><a href="https://github.com/d33con" target="_blank">By Oliver Bullen</a></p>
       </Row>
     </Container>
   );

@@ -1,6 +1,7 @@
 import React from "react"
 import { useTable } from 'react-table'
 import Table from 'react-bootstrap/Table';
+import { format } from "date-fns";
 
 function QuakeTable({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
@@ -18,7 +19,7 @@ function QuakeTable({ columns, data }) {
   // Render the UI for your table
   return (
     <div className="table-container">
-      <Table {...getTableProps()}>
+      <Table {...getTableProps()} size="sm">
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -53,6 +54,7 @@ function DisplayTable(props) {
         columns: [
           {
             accessor: 'date',
+            Cell: (props) => (<span>{format(new Date(props.row.original.date), 'dd/MM/yyyy')}</span>)
           },
         ],
       },
@@ -73,7 +75,7 @@ function DisplayTable(props) {
         ],
       },
       {
-        Header: 'Depth',
+        Header: 'Depth (km)',
         columns: [
           {
             accessor: 'depth',
@@ -85,6 +87,15 @@ function DisplayTable(props) {
         columns: [
           {
             accessor: 'locality',
+            Cell: (props) => {
+              let county
+              if(props.row.original.county) {
+                county = `, ${props.row.original.county}`
+              } else {
+                county = ""
+              }
+              return (<span>{`${props.row.original.locality}${county}`}</span>)
+            }
           },
         ],
       },

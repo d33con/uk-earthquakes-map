@@ -1,10 +1,48 @@
+:root {
+  --main-color: var(--bs-blue);
+  --main-color-hover: rgb(104, 117, 217, 0.2);
+  --track-color: #ddd;
+  --mark-color: #aaaaaa;
+  --background-one: rgb(234,244,244);
+  --background-two: rgb(250,237,205);
+  --main-text: rgb(107, 144, 128);
+  --main-lighter-green: #A4C3B2;
+  --main-middle-green: #CCE3DE;
+  --main-light-blue: #EAF4F4;
+  --main-lighter-blue: #F6FFF8;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.color-main {
+  color: var(--main-text)
+}
+
+.border-right {
+  border-right: 1px solid rgba(107, 144, 128, 0.25);
+}
+
+hr {
+  color: var(--main-text)
+}
+
+.main-container {
+  background: rgb(234,244,244);
+  background: linear-gradient(235deg, rgba(234,244,244,1) 33%, rgba(250,237,205,1) 100%);
+}
+
+
 .leaflet-container {
   width: 100%;
   height: 100vh;
 }
 
 .leaflet-tooltip {
-  font-weight: bold;
+  background-color: var(--main-lighter-blue);
+  text-align: left;
+  padding: 0.5rem
 }
 
 .table-container {
