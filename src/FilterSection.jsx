@@ -19,7 +19,8 @@ export default function FilterSection(props) {
             minDate={new Date("2022-01-01")}
             maxDate={new Date("2022-12-31")}
             dateFormat="dd/MM/yyyy"
-            withPortal
+            showMonthDropdown
+            openToDate={new Date(props.startDate)}
           />
           <DatePicker
             selected={new Date(props.endDate)}
@@ -30,11 +31,12 @@ export default function FilterSection(props) {
             minDate={new Date("2022-01-01")}
             maxDate={new Date("2022-12-31")}
             dateFormat="dd/MM/yyyy"
-            withPortal
+            showMonthDropdown
+            openToDate={new Date(props.endDate)}
           />
         </div>
         <div className="mt-3 text-center">        
-          <Button onClick={props.resetFilters}>Reset</Button>  
+          <Button onClick={props.resetDates}>Reset</Button>  
         </div>
       </Col>
       <Col className="border-right">
@@ -44,7 +46,7 @@ export default function FilterSection(props) {
           <Button onClick={props.showSeaQuakes}>Show off-shore quakes</Button>
         </div>
         <div className="mt-3 text-center">
-          <Button onClick={props.showSeaAndLandQuakes}>Show both</Button>
+          <Button onClick={props.resetLocation}>Show both</Button>
         </div>    
       </Col>
       <Col>      

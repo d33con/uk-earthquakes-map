@@ -12,52 +12,98 @@ import FilterSection from './FilterSection'
 import "./App.css";
 
 export default function App() {
-  const position = [55.50, -2.32]
-  const [dataset, setDataset] = useState([])
-  const [startDate, setStartDate] = useState("2022-01-01")
-  const [endDate, setEndDate] = useState("2022-12-31")
-  const [intensity, setIntensity] = useState([0, 6])
+  const YEAR_START = "2022-01-01"
+  const YEAR_END = "2022-12-31"
+  const MAP_CENTER = [55.50, -2.32]
+  const maxIntensity = Math.ceil(Math.max(...data.map(o => Number(o.ml))))
+  const minLongitude = Math.min(...data.map(o => Number(o.long)))
+  const maxLongitude = Math.max(...data.map(o => Number(o.long)))
+  const minLatitude = Math.min(...data.map(o => Number(o.lat)))
+  const maxLatitude = Math.max(...data.map(o => Number(o.lat)))
+  const bounds = [[minLatitude, minLongitude], [maxLatitude, maxLongitude]]
 
-  useEffect(() => (resetFilters()), [])
+  const [dataset, setDataset] = useState(data.map(d => ({ id: uuidv4(), ...d })))
+  const [filters, setFilters] = useState({
+    date: {
+      startDate: YEAR_START,
+      endDate: YEAR_END
+    },
+    intensity: [0, maxIntensity],
+    location: "both"
+  })
+
+  // useEffect(() => (resetFilters()), [])
 
   function resetFilters() {
-    setDataset(data.map(d => ({id: uuidv4(), ...d})))
+    setDataset(data.map(d => ({ id: uuidv4(), ...d })))
+    setFilters({
+      date: {
+        startDate: YEAR_START,
+        endDate: YEAR_END
+      },
+      intensity: [0, maxIntensity],
+      location: "both"
+    })
+  }
+
+  function locationFilterMapper(currentData) {
+    if (filters.location === "land") {
+      return currentData.filter(d => d.county !== "")
+    } else if (filters.location === "sea") {
+      return currentData.filter(d => d.county === "")
+    }
+    return currentData
   }
 
   function showSeaQuakes() {
-    setDataset(prevState => prevState.filter(q => q.county === ""))
+    setFilters(prevState => ({ ...prevState, location: "sea" }))
+    setDataset(data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]) && (d.county === "")))
   }
 
   function showLandQuakes() {
-    setDataset(prevState => prevState.filter(q => q.county !== ""))
+    setFilters(prevState => ({ ...prevState, location: "land" }))
+    setDataset(data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]) && (d.county !== "")))
   }
 
-  function showSeaAndLandQuakes() {
-    setDataset(data.map(d => ({id: uuidv4(), ...d})))
+  function resetLocation() {
+    setFilters(prevState => ({ ...prevState, location: "both" }))
+    setDataset(data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1])))
   }
 
-  function handleStartDateChange(date) {
-    setStartDate(date)
-    const newDataset = dataset.filter(d => d.date >= date && d.date <= endDate)
-    setDataset(newDataset)
+  function handleStartDateChange(newDate) {
+    setFilters(prevState => ({ ...prevState, date: {startDate: newDate, endDate: prevState.date.endDate }}))
+    const filteredData = data.filter(d => (d.date >= newDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
+    setDataset(locationFilterMapper(filteredData))
   }
 
-  function handleEndDateChange(date) {
-    setEndDate(date)
-    const newDataset = dataset.filter(d => d.date >= startDate && d.date <= date)
-    setDataset(newDataset)
+  function handleEndDateChange(newDate) {
+    setFilters(prevState => ({ ...prevState, date: {startDate: prevState.date.startDate, endDate: newDate }}))
+    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= newDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
+    setDataset(locationFilterMapper(filteredData))
   }
 
-  function handleSetIntensity(value) {
-    setIntensity(value)
-    const newDataset = dataset.filter(d => (d.ml >= value[0] && d.ml <= value[1]))
-    setDataset(newDataset)
+  function resetDates() {
+    setFilters(prevState => ({
+      date: {
+        startDate: YEAR_START,
+        endDate: YEAR_END
+      },
+      ...prevState
+    }))
+    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
+    setDataset(locationFilterMapper(filteredData))
+  }
+
+  function handleSetIntensity(valueArray) {
+    setFilters(prevState => ({ ...prevState, intensity: valueArray }))
+    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= valueArray[0] && d.ml <= valueArray[1]))
+    setDataset(locationFilterMapper(filteredData))
   }
 
   function resetIntensitySlider() {
-    setIntensity([0, 6])
-    const newDataset = dataset.filter(d => (d.ml >= 0 && d.ml <= 6))
-    setDataset(newDataset)
+    setFilters(prevState => ({ ...prevState, intensity: [0, maxIntensity] }))
+    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate))
+    setDataset(locationFilterMapper(filteredData))
   }
 
   return (
@@ -68,15 +114,15 @@ export default function App() {
       </Row>
       <Row className="filter-section ps-4 pe-4 pb-4">
         <FilterSection
-          resetFilters={resetFilters}
           showSeaQuakes={showSeaQuakes}
           showLandQuakes={showLandQuakes}
-          showSeaAndLandQuakes={showSeaAndLandQuakes}
-          startDate={startDate}
+          resetLocation={resetLocation}
+          startDate={filters.date.startDate}
           setStartDate={handleStartDateChange}
-          endDate={endDate}
+          endDate={filters.date.endDate}
           setEndDate={handleEndDateChange}
-          intensity={intensity}
+          resetDates={resetDates}
+          intensity={filters.intensity}
           handleSetIntensity={handleSetIntensity}
           resetIntensitySlider={resetIntensitySlider} />
         <h5 className="text-center color-main mt-4">{`Showing ${dataset.length} of ${data.length} total earthquakes`}</h5>
@@ -87,32 +133,29 @@ export default function App() {
       </Row>  
       <Row className="mb-4">
         <Col xs={6}>
-          <MapContainer center={position} zoom={6} scrollWheelZoom={false}>
+          <MapContainer center={MAP_CENTER} zoom={6} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {dataset.map(point => (
-            <Marker
-              position={[point.lat, point.long]}
-              radius={100}
-              fillColor="#333"
-              eventHandlers={{
-              mouseover: () => {
-                return;
-              },
-              }}
-              key={point.id}
-              >
-              <Tooltip>
-                <h5 className="color-main text-center">Intensity: <span className="font-weight-bold">{point.ml}</span></h5>
-                <hr />
-                <div>Date: <span className="font-weight-bold">{format(new Date(point.date), 'dd/MM/yyyy')}</span></div>
-                <div>Time: <span className="font-weight-bold">{point.time.split(":").slice(0,2).join(":")}</span></div>
-                <div>Location: <span className="font-weight-bold">{point.locality}{point.county && `, ${point.county}`}</span></div>
-                <div>Depth: <span className="font-weight-bold">{point.depth} km</span></div>
-              </Tooltip>
-            </Marker>
+              <Marker
+                position={[point.lat, point.long]}
+                eventHandlers={{
+                mouseover: () => {
+                  return;
+                },
+                }}
+                key={point.id}>
+                <Tooltip>
+                  <h5 className="color-main text-center">Intensity: <span className="font-weight-bold">{point.ml}</span></h5>
+                  <hr />
+                  <div>Date: <span className="font-weight-bold">{format(new Date(point.date), 'dd/MM/yyyy')}</span></div>
+                  <div>Time: <span className="font-weight-bold">{point.time.split(":").slice(0,2).join(":")}</span></div>
+                  <div>Location: <span className="font-weight-bold">{point.locality}{point.county && `, ${point.county}`}</span></div>
+                  <div>Depth: <span className="font-weight-bold">{point.depth} km</span></div>
+                </Tooltip>
+              </Marker>
             ))}
           </MapContainer>
         </Col>
@@ -121,7 +164,7 @@ export default function App() {
         </Col>
       </Row>
       <Row>
-        <p as="a" className="text-center"><a href="https://github.com/d33con" target="_blank">By Oliver Bullen</a></p>
+        <p className="text-center"><a href="https://github.com/d33con" target="_blank">By Oliver Bullen</a></p>
       </Row>
     </Container>
   );
