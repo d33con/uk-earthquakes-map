@@ -51,53 +51,33 @@ function DisplayTable(props) {
     () => [
       {
         Header: 'Date',
-        columns: [
-          {
-            accessor: 'date',
-            Cell: (props) => (<span>{format(new Date(props.row.original.date), 'dd/MM/yyyy')}</span>)
-          },
-        ],
+        accessor: 'date',
+        Cell: (props) => (<span>{format(new Date(props.row.original.date), 'dd/MM/yyyy')}</span>)
       },
       {
         Header: 'Time',
-        columns: [
-          {
-            accessor: 'time',
-          },
-        ],
+        accessor: 'time',
       },
       {
         Header: 'Intensity',
-        columns: [
-          {
-            accessor: 'ml',
-          },
-        ],
+        accessor: 'ml',
       },
       {
         Header: 'Depth (km)',
-        columns: [
-          {
-            accessor: 'depth',
-          },
-        ],
+        accessor: 'depth',
       },
       {
         Header: 'Location',
-        columns: [
-          {
-            accessor: 'locality',
-            Cell: (props) => {
-              let county
-              if(props.row.original.county) {
-                county = `, ${props.row.original.county}`
-              } else {
-                county = ""
-              }
-              return (<span>{`${props.row.original.locality}${county}`}</span>)
-            }
-          },
-        ],
+        accessor: 'locality',
+        Cell: (props) => {
+          let county
+          if(props.row.original.county) {
+            county = `, ${props.row.original.county}`
+          } else {
+            county = ""
+          }
+          return (<span>{`${props.row.original.locality}${county}`}</span>)
+        }
       },
     ],
     []
