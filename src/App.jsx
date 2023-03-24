@@ -112,7 +112,7 @@ export default function App() {
         <h1 className="text-center color-main pb-4">Earthquakes in the UK 2022</h1>
         <hr />
       </Row>
-      <Row className="filter-section ps-4 pe-4 pb-4">
+      <Row className="filter-section ps-4 pe-4 pb-4" xs={1} xl={3}>
         <FilterSection
           showSeaQuakes={showSeaQuakes}
           showLandQuakes={showLandQuakes}
@@ -125,9 +125,11 @@ export default function App() {
           intensity={filters.intensity}
           handleSetIntensity={handleSetIntensity}
           resetIntensitySlider={resetIntensitySlider} />
+      </Row>
+      <Row>          
         <h5 className="text-center color-main mt-4">{`Showing ${dataset.length} of ${data.length} total earthquakes`}</h5>
         <div className="text-center mb-4">        
-          <Button variant="outline-secondary" onClick={resetFilters}>Show all</Button>
+          <Button variant="outline-secondary" disabled={dataset.length < data.length ? false : true} onClick={resetFilters}>Show all</Button>
         </div>
         <hr />
       </Row>  
@@ -148,7 +150,7 @@ export default function App() {
                 }}
                 key={point.id}>
                 <Tooltip>
-                  <h5 className="color-main text-center">Intensity: <span className="font-weight-bold">{point.ml}</span></h5>
+                  <h5 className="color-main text-center">Magnitude: <span className="font-weight-bold">{point.ml}</span></h5>
                   <hr />
                   <div>Date: <span className="font-weight-bold">{format(new Date(point.date), 'dd/MM/yyyy')}</span></div>
                   <div>Time: <span className="font-weight-bold">{point.time.split(":").slice(0,2).join(":")}</span></div>
@@ -164,7 +166,10 @@ export default function App() {
         </Col>
       </Row>
       <Row>
-        <p className="text-center"><a href="https://github.com/d33con" target="_blank">By Oliver Bullen</a></p>
+        <p className="text-center">
+          Data from <a href="https://earthquakes.bgs.ac.uk/earthquakes/home.html" target="_blank">BGS</a> - by{' '}
+          <a href="https://github.com/d33con" target="_blank">Oliver Bullen</a>
+        </p>
       </Row>
     </Container>
   );
