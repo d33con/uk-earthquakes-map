@@ -12,12 +12,12 @@
 }
 
 .intensity-slider-track.intensity-slider-track-1 {
-  background: var(--main-color);
+  background: var(--main--button-bg);
 }
 
 .intensity-slider-thumb {
   cursor: pointer;
-  background: var(--bs-blue);
+  background: var(--main--button-bg);
   width: 30px;
   height: 30px;
   border-radius: 100%;
@@ -31,7 +31,7 @@
 }
 
 .intensity-slider-thumb:hover {
-  box-shadow: 0 0 0 8px rgba(13, 110, 253, 0.2);
+  box-shadow: 0 0 0 8px rgba(84, 46, 113, 0.2);
 }
 
 .intensity-slider-marks {
@@ -39,5 +39,5 @@
   top: 3px;
   width: 3px;
   height: 15px;
-  background-color: var(--bs-gray-600);
+  background-color: var(--main-text);
 }
