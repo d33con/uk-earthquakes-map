@@ -5,11 +5,28 @@
   --mark-color: #aaaaaa;
   --background-one: rgb(234,244,244);
   --background-two: rgb(250,237,205);
-  --main-text: rgb(107, 144, 128);
+  --main-text: rgb(84, 46, 113);
+  --main--button-bg: rgb(106, 102, 163);
   --main-lighter-green: #A4C3B2;
   --main-middle-green: #CCE3DE;
   --main-light-blue: #EAF4F4;
   --main-lighter-blue: #F6FFF8;
+  --reset-button-grey: #ddd8b8;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.btn-primary {
+  border: 1px solid var(--main--button-bg) !important;
+  background-color: var(--main--button-bg) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--bs-gray-300) !important;
+  color: var(--main--button-bg) !important;
+  border-color: var(--main--button-bg) !important;
 }
 
 .font-weight-bold {
@@ -20,8 +37,16 @@
   color: var(--main-text)
 }
 
-.border-right {
-  border-right: 1px solid rgba(107, 144, 128, 0.25);
+@media screen and (max-width: 1200px) {
+  .divider {
+    border-bottom: 1px solid rgba(84, 46, 113, 0.25);      
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  .divider {
+    border-right: 1px solid rgba(84, 46, 113, 0.25);    
+  }
 }
 
 hr {
@@ -42,7 +67,8 @@ hr {
 .leaflet-tooltip {
   background-color: var(--main-lighter-blue);
   text-align: left;
-  padding: 0.5rem
+  padding: 0.5rem;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .table-container {
