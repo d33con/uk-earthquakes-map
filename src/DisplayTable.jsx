@@ -68,7 +68,7 @@ function DisplayTable(props) {
         disableSortBy: true,
       },
       {
-        Header: 'Intensity',
+        Header: 'Magnitude',
         accessor: 'ml',
       },
       {
