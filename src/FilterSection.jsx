@@ -7,7 +7,7 @@ import IntensitySlider from './IntensitySlider';
 export default function FilterSection(props) {
   return (
     <>   
-      <Col className="border-right">
+      <Col className="divider">
         <h4 className="text-center color-main mb-3">Filter by date</h4>
         <div className="d-flex justify-content-around">        
           <DatePicker
@@ -36,10 +36,10 @@ export default function FilterSection(props) {
           />
         </div>
         <div className="mt-3 text-center">        
-          <Button onClick={props.resetDates}>Reset</Button>  
+          <Button variant="primary" onClick={props.resetDates}>Reset</Button>  
         </div>
       </Col>
-      <Col className="border-right">
+      <Col className="divider">
         <h4 className="text-center color-main mb-3">Filter by location</h4>
         <div className="d-flex justify-content-around">  
           <Button onClick={props.showLandQuakes}>Show on-shore quakes</Button>    
@@ -52,7 +52,7 @@ export default function FilterSection(props) {
       <Col>      
         <h4 className="text-center color-main mb-3">Filter by intensity</h4>
         <div className="d-flex flex-row justify-content-center align-items-center">
-          <small className="font-weight-light">Min</small>        
+          <small className="font-weight-light me-1">Min</small>        
           <IntensitySlider
             intensity={props.intensity}
             handleSetIntensity={props.handleSetIntensity} />
