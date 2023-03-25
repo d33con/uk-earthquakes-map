@@ -32,7 +32,9 @@ export default function App() {
     location: "both"
   })
 
-  // useEffect(() => (resetFilters()), [])
+  // Filter table as map is zoomed in?
+
+  useEffect(() => (filterDataset()), [filters])
 
   function resetFilters() {
     setDataset(data.map(d => ({ id: uuidv4(), ...d })))
@@ -46,64 +48,46 @@ export default function App() {
     })
   }
 
-  function locationFilterMapper(currentData) {
+  function filterDataset() {
+    const filteredDataset = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
     if (filters.location === "land") {
-      return currentData.filter(d => d.county !== "")
+      return setDataset(filteredDataset.filter(d => d.county !== ""))
     } else if (filters.location === "sea") {
-      return currentData.filter(d => d.county === "")
+      return setDataset(filteredDataset.filter(d => d.county === ""))
     }
-    return currentData
+    return setDataset(filteredDataset)
   }
 
   function showSeaQuakes() {
     setFilters(prevState => ({ ...prevState, location: "sea" }))
-    setDataset(data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]) && (d.county === "")))
   }
 
   function showLandQuakes() {
     setFilters(prevState => ({ ...prevState, location: "land" }))
-    setDataset(data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]) && (d.county !== "")))
   }
 
   function resetLocation() {
     setFilters(prevState => ({ ...prevState, location: "both" }))
-    setDataset(data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1])))
   }
 
   function handleStartDateChange(newDate) {
-    setFilters(prevState => ({ ...prevState, date: {startDate: newDate, endDate: prevState.date.endDate }}))
-    const filteredData = data.filter(d => (d.date >= newDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
-    setDataset(locationFilterMapper(filteredData))
+    setFilters(prevState => ({ ...prevState, date: { startDate: newDate, endDate: prevState.date.endDate }}))
   }
 
   function handleEndDateChange(newDate) {
-    setFilters(prevState => ({ ...prevState, date: {startDate: prevState.date.startDate, endDate: newDate }}))
-    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= newDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
-    setDataset(locationFilterMapper(filteredData))
+    setFilters(prevState => ({ ...prevState, date: { startDate: prevState.date.startDate, endDate: newDate }}))
   }
 
   function resetDates() {
-    setFilters(prevState => ({
-      date: {
-        startDate: YEAR_START,
-        endDate: YEAR_END
-      },
-      ...prevState
-    }))
-    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
-    setDataset(locationFilterMapper(filteredData))
+    setFilters(prevState => ({ ...prevState, date: { startDate: YEAR_START, endDate: YEAR_END }}))
   }
 
   function handleSetIntensity(valueArray) {
     setFilters(prevState => ({ ...prevState, intensity: valueArray }))
-    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= valueArray[0] && d.ml <= valueArray[1]))
-    setDataset(locationFilterMapper(filteredData))
   }
 
   function resetIntensitySlider() {
     setFilters(prevState => ({ ...prevState, intensity: [0, maxIntensity] }))
-    const filteredData = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate))
-    setDataset(locationFilterMapper(filteredData))
   }
 
   return (
