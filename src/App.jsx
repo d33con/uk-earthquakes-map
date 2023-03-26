@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
-import { format } from "date-fns";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import { v4 as uuidv4 } from 'uuid'
 import data from './data'
+import Title from './Title'
+import Footer from "./Footer";
+import ResetAllFilters from "./ResetAllFilters";
 import DisplayTable from './DisplayTable'
 import FilterSection from './FilterSection'
+import EarthquakeMap from "./EarthquakeMap";
 import "./App.css";
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
   const maxLatitude = Math.max(...data.map(o => Number(o.lat)))
   const bounds = [[minLatitude, minLongitude], [maxLatitude, maxLongitude]]
 
-  const [dataset, setDataset] = useState(data.map(d => ({ id: uuidv4(), ...d })))
+  const [dataset, setDataset] = useState(data)
   const [filters, setFilters] = useState({
     date: {
       startDate: YEAR_START,
@@ -37,7 +37,7 @@ export default function App() {
   useEffect(() => (filterDataset()), [filters])
 
   function resetFilters() {
-    setDataset(data.map(d => ({ id: uuidv4(), ...d })))
+    setDataset(data)
     setFilters({
       date: {
         startDate: YEAR_START,
@@ -92,69 +92,34 @@ export default function App() {
 
   return (
     <Container fluid className="main-container">
-      <Row className="title-section p-4">
-        <h1 className="text-center color-main pb-4">Earthquakes in the UK 2022</h1>
-        <hr />
-      </Row>
-      <Row className="filter-section ps-4 pe-4 pb-4" xs={1} xl={3}>
-        <FilterSection
-          showSeaQuakes={showSeaQuakes}
-          showLandQuakes={showLandQuakes}
-          resetLocation={resetLocation}
-          startDate={filters.date.startDate}
-          setStartDate={handleStartDateChange}
-          endDate={filters.date.endDate}
-          setEndDate={handleEndDateChange}
-          resetDates={resetDates}
-          intensity={filters.intensity}
-          handleSetIntensity={handleSetIntensity}
-          resetIntensitySlider={resetIntensitySlider} />
-      </Row>
-      <Row>          
-        <h5 className="text-center color-main mt-4">{`Showing ${dataset.length} of ${data.length} total earthquakes`}</h5>
-        <div className="text-center mb-4">        
-          <Button variant="outline-secondary" disabled={dataset.length < data.length ? false : true} onClick={resetFilters}>Show all</Button>
-        </div>
-        <hr />
-      </Row>  
+      <Title />
+      <FilterSection
+        showSeaQuakes={showSeaQuakes}
+        showLandQuakes={showLandQuakes}
+        resetLocation={resetLocation}
+        startDate={filters.date.startDate}
+        setStartDate={handleStartDateChange}
+        endDate={filters.date.endDate}
+        setEndDate={handleEndDateChange}
+        resetDates={resetDates}
+        intensity={filters.intensity}
+        handleSetIntensity={handleSetIntensity}
+        resetIntensitySlider={resetIntensitySlider}
+      />
+      <ResetAllFilters
+        resetFilters={resetFilters}
+        totalFiltered={dataset.length}
+        totalEarthquakes={data.length}
+      />  
       <Row className="mb-4">
         <Col xs={6}>
-          <MapContainer center={MAP_CENTER} zoom={6} scrollWheelZoom={false}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {dataset.map(point => (
-              <Marker
-                position={[point.lat, point.long]}
-                eventHandlers={{
-                mouseover: () => {
-                  return;
-                },
-                }}
-                key={point.id}>
-                <Tooltip>
-                  <h5 className="color-main text-center">Magnitude: <span className="font-weight-bold">{point.ml}</span></h5>
-                  <hr />
-                  <div>Date: <span className="font-weight-bold">{format(new Date(point.date), 'dd/MM/yyyy')}</span></div>
-                  <div>Time: <span className="font-weight-bold">{point.time.split(":").slice(0,2).join(":")}</span></div>
-                  <div>Location: <span className="font-weight-bold">{point.locality}{point.county && `, ${point.county}`}</span></div>
-                  <div>Depth: <span className="font-weight-bold">{point.depth} km</span></div>
-                </Tooltip>
-              </Marker>
-            ))}
-          </MapContainer>
+          <EarthquakeMap mapCenter={MAP_CENTER} dataset={dataset} />
         </Col>
         <Col xs={6}>        
           <DisplayTable dataset={dataset} />
         </Col>
       </Row>
-      <Row>
-        <p className="text-center">
-          Data from <a href="https://earthquakes.bgs.ac.uk/earthquakes/home.html" target="_blank">BGS</a> - by{' '}
-          <a href="https://github.com/d33con" target="_blank">Oliver Bullen</a>
-        </p>
-      </Row>
+      <Footer />
     </Container>
   );
 }

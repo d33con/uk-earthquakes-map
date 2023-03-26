@@ -1,12 +1,13 @@
-import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import IntensitySlider from './IntensitySlider';
 
 export default function FilterSection(props) {
   return (
-    <>   
+    <Row className="filter-section ps-4 pe-4 pb-4" xs={1} xl={3}>   
       <Col className="divider">
         <h4 className="text-center color-main mb-3">Filter by date</h4>
         <div className="d-flex justify-content-around">        
@@ -62,7 +63,7 @@ export default function FilterSection(props) {
           <Button onClick={props.resetIntensitySlider}>Reset</Button>
         </div>
       </Col>
-    </>
+    </Row>
   )
 }
 
