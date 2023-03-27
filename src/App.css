@@ -75,3 +75,15 @@ hr {
   height: 100vh;
   overflow: hidden auto;
 }
+
+.btn-check + label {
+  background-color: var(--bs-gray-300) !important;
+  color: var(--main--button-bg) !important;
+  border-color: var(--main--button-bg) !important;
+}
+
+.btn-check:checked + label {
+  border: 1px solid var(--main--button-bg) !important;
+  background-color: var(--main--button-bg) !important;
+  color: var(--bs-btn-color) !important;
+}

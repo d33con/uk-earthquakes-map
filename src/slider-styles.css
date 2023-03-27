@@ -8,7 +8,7 @@
 .intensity-slider-track {
   top: 8px;
   height: 4px;
-  background: var(--track-color);
+  background: var(--background-one);
 }
 
 .intensity-slider-track.intensity-slider-track-1 {

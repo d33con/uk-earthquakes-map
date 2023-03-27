@@ -16,11 +16,6 @@ export default function App() {
   const YEAR_END = "2022-12-31"
   const MAP_CENTER = [55.50, -2.32]
   const maxIntensity = Math.ceil(Math.max(...data.map(o => Number(o.ml))))
-  const minLongitude = Math.min(...data.map(o => Number(o.long)))
-  const maxLongitude = Math.max(...data.map(o => Number(o.long)))
-  const minLatitude = Math.min(...data.map(o => Number(o.lat)))
-  const maxLatitude = Math.max(...data.map(o => Number(o.lat)))
-  const bounds = [[minLatitude, minLongitude], [maxLatitude, maxLongitude]]
 
   const [dataset, setDataset] = useState(data)
   const [filters, setFilters] = useState({
@@ -58,18 +53,6 @@ export default function App() {
     return setDataset(filteredDataset)
   }
 
-  function showSeaQuakes() {
-    setFilters(prevState => ({ ...prevState, location: "sea" }))
-  }
-
-  function showLandQuakes() {
-    setFilters(prevState => ({ ...prevState, location: "land" }))
-  }
-
-  function resetLocation() {
-    setFilters(prevState => ({ ...prevState, location: "both" }))
-  }
-
   function handleStartDateChange(newDate) {
     setFilters(prevState => ({ ...prevState, date: { startDate: newDate, endDate: prevState.date.endDate }}))
   }
@@ -80,6 +63,10 @@ export default function App() {
 
   function resetDates() {
     setFilters(prevState => ({ ...prevState, date: { startDate: YEAR_START, endDate: YEAR_END }}))
+  }
+  
+  function handleLocationChange(evt) {
+    setFilters(prevState => ({ ...prevState, location: evt.target.value }))
   }
 
   function handleSetIntensity(valueArray) {
@@ -94,14 +81,13 @@ export default function App() {
     <Container fluid className="main-container">
       <Title />
       <FilterSection
-        showSeaQuakes={showSeaQuakes}
-        showLandQuakes={showLandQuakes}
-        resetLocation={resetLocation}
         startDate={filters.date.startDate}
         setStartDate={handleStartDateChange}
         endDate={filters.date.endDate}
         setEndDate={handleEndDateChange}
         resetDates={resetDates}
+        locationFilter={filters.location}
+        handleLocationChange={handleLocationChange}
         intensity={filters.intensity}
         handleSetIntensity={handleSetIntensity}
         resetIntensitySlider={resetIntensitySlider}

@@ -1,11 +1,28 @@
-import Row from 'react-bootstrap/Row';
+import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import ToggleButtonGroup from 'react-bootstrap/ButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css";
-import IntensitySlider from './IntensitySlider';
+import "react-datepicker/dist/react-datepicker.css"
+import IntensitySlider from './IntensitySlider'
 
 export default function FilterSection(props) {
+  const locationRadios = [
+    {
+      buttonText: 'On-shore',
+      value: 'land'
+    },
+    {
+      buttonText: 'Off-shore',
+      value: 'sea'
+    },
+    {
+      buttonText: 'All',
+      value: 'both'
+    }
+  ]
+
   return (
     <Row className="filter-section ps-4 pe-4 pb-4" xs={1} xl={3}>   
       <Col className="divider">
@@ -42,13 +59,24 @@ export default function FilterSection(props) {
       </Col>
       <Col className="divider">
         <h4 className="text-center color-main mb-3">Filter by location</h4>
-        <div className="d-flex justify-content-around">  
-          <Button onClick={props.showLandQuakes}>Show on-shore quakes</Button>    
-          <Button onClick={props.showSeaQuakes}>Show off-shore quakes</Button>
-        </div>
-        <div className="mt-3 text-center">
-          <Button onClick={props.resetLocation}>Show both</Button>
-        </div>    
+        <div className="d-flex justify-content-center">  
+          <ToggleButtonGroup className="mb-2" onChange={(evt) => props.handleLocationChange(evt)}
+          >
+            {locationRadios.map(location => (
+              <ToggleButton
+                key={location.value}
+                id={location.value}
+                type="radio"
+                variant="primary"
+                name="locationFilter"
+                value={location.value}
+                checked={props.locationFilter === location.value}
+              >
+                {location.buttonText}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </div>   
       </Col>
       <Col>      
         <h4 className="text-center color-main mb-3">Filter by intensity</h4>
