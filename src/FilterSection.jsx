@@ -25,9 +25,9 @@ export default function FilterSection(props) {
 
   return (
     <Row className="filter-section ps-4 pe-4 pb-4" xs={1} xl={3}>   
-      <Col className="divider">
+      <Col className="divider mb-4">
         <h4 className="text-center color-main mb-3">Filter by date</h4>
-        <div className="d-flex justify-content-around">        
+        <div className="d-flex justify-content-center">        
           <DatePicker
             selected={new Date(props.startDate)}
             onChange={(date) => props.setStartDate(date.toISOString().split("T")[0])}
@@ -57,7 +57,7 @@ export default function FilterSection(props) {
           <Button variant="primary" onClick={props.resetDates}>Reset</Button>  
         </div>
       </Col>
-      <Col className="divider">
+      <Col className="divider mb-4">
         <h4 className="text-center color-main mb-3">Filter by location</h4>
         <div className="d-flex justify-content-center">  
           <ToggleButtonGroup className="mb-2" onChange={(evt) => props.handleLocationChange(evt)}
