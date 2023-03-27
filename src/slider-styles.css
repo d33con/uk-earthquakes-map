@@ -8,16 +8,16 @@
 .intensity-slider-track {
   top: 8px;
   height: 4px;
-  background: var(--background-one);
+  background: var(--background-blue);
 }
 
 .intensity-slider-track.intensity-slider-track-1 {
-  background: var(--main--button-bg);
+  background: var(--button-bg-purple);
 }
 
 .intensity-slider-thumb {
   cursor: pointer;
-  background: var(--main--button-bg);
+  background: var(--button-bg-purple);
   width: 30px;
   height: 30px;
   border-radius: 100%;
@@ -31,7 +31,7 @@
 }
 
 .intensity-slider-thumb:hover {
-  box-shadow: 0 0 0 8px rgba(84, 46, 113, 0.2);
+  box-shadow: 0 0 0 8px var(--text-purple-shadow);
 }
 
 .intensity-slider-marks {
@@ -39,5 +39,5 @@
   top: 3px;
   width: 3px;
   height: 15px;
-  background-color: var(--main-text);
+  background-color: var(--text-purple);
 }
