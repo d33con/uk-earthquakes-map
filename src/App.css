@@ -82,3 +82,21 @@ hr {
   height: 100vh;
   overflow: hidden auto;
 }
+
+table span.sorting {
+  background-color: var(--bs-gray-300);
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--bs-gray-600);
+  padding: 0 4px;
+}
+
+table span.sorting.asc {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+table span.sorting.desc {
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}

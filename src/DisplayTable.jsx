@@ -29,8 +29,8 @@ function QuakeTable({ columns, data }) {
               {headerGroup.headers.map(column => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                  <span className={`sorting ${column.isSorted ? (column.isSortedDesc ? 'desc' : 'asc') : ''}`}>
+                    {column.isSorted && ' <'}
                   </span>
                 </th>
               ))}
