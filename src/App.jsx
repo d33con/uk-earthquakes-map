@@ -16,6 +16,10 @@ export default function App() {
   const YEAR_END = "2022-12-31"
   const MAP_CENTER = [55.50, -2.32]
   const maxIntensity = Math.ceil(Math.max(...data.map(o => Number(o.ml))))
+  const minLongitude = Math.min(...data.map(o => Number(o.long))) - 0.2
+  const maxLongitude = Math.max(...data.map(o => Number(o.long))) + 0.2
+  const minLatitude = Math.min(...data.map(o => Number(o.lat))) - 0.2
+  const maxLatitude = Math.max(...data.map(o => Number(o.lat))) + 0.2
 
   const [dataset, setDataset] = useState(data)
   const [filters, setFilters] = useState({
@@ -24,10 +28,14 @@ export default function App() {
       endDate: YEAR_END
     },
     intensity: [0, maxIntensity],
-    location: "both"
+    location: "both",
+    mapBounds: {
+      maxLatitude,
+      minLatitude,
+      maxLongitude,
+      minLongitude
+    }
   })
-
-  // Filter table as map is zoomed in?
 
   useEffect(() => (filterDataset()), [filters])
 
@@ -39,12 +47,18 @@ export default function App() {
         endDate: YEAR_END
       },
       intensity: [0, maxIntensity],
-      location: "both"
+      location: "both",
+      mapBounds: {
+        maxLatitude,
+        minLatitude,
+        maxLongitude,
+        minLongitude
+      }
     })
   }
 
   function filterDataset() {
-    const filteredDataset = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]))
+    const filteredDataset = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]) && (parseFloat(d.lat) < filters.mapBounds.maxLatitude && parseFloat(d.lat) > filters.mapBounds.minLatitude) && (parseFloat(d.long) < filters.mapBounds.maxLongitude && parseFloat(d.long) > filters.mapBounds.minLongitude))
     if (filters.location === "land") {
       return setDataset(filteredDataset.filter(d => d.county !== ""))
     } else if (filters.location === "sea") {
@@ -77,6 +91,10 @@ export default function App() {
     setFilters(prevState => ({ ...prevState, intensity: [0, maxIntensity] }))
   }
 
+  function handleMapMove(latLngObject) {
+    setFilters(prevState => ({ ...prevState, mapBounds: latLngObject }))
+  }
+
   return (
     <Container fluid className="main-container">
       <Title />
@@ -99,7 +117,7 @@ export default function App() {
       />  
       <Row className="mb-4">
         <Col xs={6}>
-          <EarthquakeMap mapCenter={MAP_CENTER} dataset={dataset} />
+          <EarthquakeMap mapCenter={MAP_CENTER} dataset={dataset} handleMapMove={handleMapMove} />
         </Col>
         <Col xs={6}>        
           <DisplayTable dataset={dataset} />
