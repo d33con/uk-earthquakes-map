@@ -120,7 +120,7 @@ export default function App() {
         totalEarthquakes={data.length}
       />  
       <Row className="mb-4">
-        <Col xs={6}>
+        <Col xs={12} xl={6} className="mb-4 mb-xl-0">
           <EarthquakeMap
             mapCenter={MAP_CENTER}
             dataset={dataset}
@@ -129,7 +129,7 @@ export default function App() {
             mapDefaultZoom={MAP_DEFAULT_ZOOM}
           />
         </Col>
-        <Col xs={6}>        
+        <Col xs={12} xl={6}>        
           <DisplayTable dataset={dataset} />
         </Col>
       </Row>
