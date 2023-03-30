@@ -14,13 +14,15 @@ import "./App.css";
 export default function App() {
   const YEAR_START = "2022-01-01"
   const YEAR_END = "2022-12-31"
-  const MAP_CENTER = [55.50, -2.32]
+  const MAP_CENTER = [56.047, -1.977]
+  const MAP_DEFAULT_ZOOM = 6
   const maxIntensity = Math.ceil(Math.max(...data.map(o => Number(o.ml))))
-  const minLongitude = Math.min(...data.map(o => Number(o.long))) - 0.2
-  const maxLongitude = Math.max(...data.map(o => Number(o.long))) + 0.2
-  const minLatitude = Math.min(...data.map(o => Number(o.lat))) - 0.2
-  const maxLatitude = Math.max(...data.map(o => Number(o.lat))) + 0.2
-
+  const minLongitude = Math.min(...data.map(o => Number(o.long)))
+  const maxLongitude = Math.max(...data.map(o => Number(o.long)))
+  const minLatitude = Math.min(...data.map(o => Number(o.lat)))
+  const maxLatitude = Math.max(...data.map(o => Number(o.lat)))
+  
+  const [map, setMap] = useState(null)
   const [dataset, setDataset] = useState(data)
   const [filters, setFilters] = useState({
     date: {
@@ -55,6 +57,8 @@ export default function App() {
         minLongitude
       }
     })
+
+    map.setView(MAP_CENTER, MAP_DEFAULT_ZOOM)
   }
 
   function filterDataset() {
@@ -117,7 +121,13 @@ export default function App() {
       />  
       <Row className="mb-4">
         <Col xs={6}>
-          <EarthquakeMap mapCenter={MAP_CENTER} dataset={dataset} handleMapMove={handleMapMove} />
+          <EarthquakeMap
+            mapCenter={MAP_CENTER}
+            dataset={dataset}
+            handleMapMove={handleMapMove}
+            setMap={setMap}
+            mapDefaultZoom={MAP_DEFAULT_ZOOM}
+          />
         </Col>
         <Col xs={6}>        
           <DisplayTable dataset={dataset} />

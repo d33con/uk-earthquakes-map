@@ -2,11 +2,9 @@ import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import { format } from "date-fns";
 import MapMove from './MapMove'
 
-export default function EarthquakeMap({ mapCenter, dataset, handleMapMove }) {
-  const MAP_DEFAULT_ZOOM = 6
-
+export default function EarthquakeMap({ mapCenter, dataset, handleMapMove, setMap, mapDefaultZoom }) {
   return (
-    <MapContainer center={mapCenter} zoom={MAP_DEFAULT_ZOOM} scrollWheelZoom={false}>
+    <MapContainer center={mapCenter} zoom={mapDefaultZoom} scrollWheelZoom={false} ref={setMap}>
       <MapMove handleMapMove={handleMapMove} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
