@@ -23,7 +23,7 @@ const popover = (
 
 export default function AboutOverlay() {
   return (
-    <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
+    <OverlayTrigger trigger={["hover", "focus"]} placement="right" overlay={popover}>
       <Button variant="primary" className="btn-about">?</Button>
     </OverlayTrigger>
   )
