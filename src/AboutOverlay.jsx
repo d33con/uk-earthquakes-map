@@ -16,6 +16,7 @@ const popover = (
         <p>The list of earthquakes will update as the map is moved or zoomed</p>
         <h6>Table</h6>
         <p>The table updates automatically and can be sorted by Date, Magnitude, Depth and Location</p>
+        <p>Click a table row to zoom in to the earthquake's location on the map</p>
       </Row>
     </Popover.Body>
   </Popover>
