@@ -107,3 +107,11 @@ table span.sorting.desc {
   -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }
+
+table tr.pointer {
+  cursor: pointer;
+}
+
+table tr.pointer.selected {
+  background-color: var(--text-purple-faded);
+}

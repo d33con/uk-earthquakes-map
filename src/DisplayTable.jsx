@@ -3,7 +3,7 @@ import { useTable, useSortBy } from 'react-table'
 import Table from 'react-bootstrap/Table';
 import { format } from "date-fns";
 
-function QuakeTable({ columns, data }) {
+function QuakeTable({ columns, data, setCurrentlySelectedQuake, currentlySelectedQuake }) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -22,7 +22,7 @@ function QuakeTable({ columns, data }) {
   // Render the UI for your table
   return (
     <div className="table-container">
-      <Table {...getTableProps()} size="sm">
+      <Table {...getTableProps()} size="sm" hover>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -41,7 +41,12 @@ function QuakeTable({ columns, data }) {
           {rows.map((row, i) => {
             prepareRow(row)
             return (
-              <tr {...row.getRowProps()} onMouseEnter={(event) => console.log(event.target.parentNode.id)} id={row.original.id}>
+              <tr
+                {...row.getRowProps()}
+                onClick={() => setCurrentlySelectedQuake(row.original.id)}
+                id={row.original.id}
+                className={`pointer ${row.original.id === currentlySelectedQuake ? "selected" : ""}`}
+              >
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
@@ -93,7 +98,12 @@ function DisplayTable(props) {
   )
 
   return (
-    <QuakeTable columns={columns} data={props.dataset} />
+    <QuakeTable
+      columns={columns}
+      data={props.dataset}
+      setCurrentlySelectedQuake={props.setCurrentlySelectedQuake}
+      currentlySelectedQuake={props.currentlySelectedQuake}
+    />
   )
 }
 

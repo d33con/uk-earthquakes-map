@@ -23,6 +23,7 @@ export default function App() {
   const maxLatitude = Math.max(...data.map(o => Number(o.lat)))
   
   const [map, setMap] = useState(null)
+  const [currentlySelectedQuake, setCurrentlySelectedQuake] = useState("")
   const [dataset, setDataset] = useState(data)
   const [filters, setFilters] = useState({
     date: {
@@ -58,7 +59,7 @@ export default function App() {
       }
     })
 
-    map.setView(MAP_CENTER, MAP_DEFAULT_ZOOM)
+    map.flyTo(MAP_CENTER, MAP_DEFAULT_ZOOM)
   }
 
   function filterDataset() {
@@ -99,6 +100,13 @@ export default function App() {
     setFilters(prevState => ({ ...prevState, mapBounds: latLngObject }))
   }
 
+  function updateCurrentlySelectedQuake(clickedId) {
+    const clickedQuake = dataset.find(d => d.id === clickedId)
+    const latLng = [parseFloat(clickedQuake.lat), parseFloat(clickedQuake.long)]
+    map.flyTo(latLng, 11)
+    setCurrentlySelectedQuake(clickedId)
+  }
+
   return (
     <Container fluid className="main-container">
       <Title />
@@ -130,7 +138,11 @@ export default function App() {
           />
         </Col>
         <Col xs={12} xl={6}>        
-          <DisplayTable dataset={dataset} />
+          <DisplayTable
+            dataset={dataset}
+            setCurrentlySelectedQuake={updateCurrentlySelectedQuake}
+            currentlySelectedQuake={currentlySelectedQuake}
+          />
         </Col>
       </Row>
       <Footer />
