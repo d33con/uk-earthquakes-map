@@ -58,7 +58,7 @@ export default function App() {
         minLongitude
       }
     })
-
+    setCurrentlySelectedQuake("")
     map.flyTo(MAP_CENTER, MAP_DEFAULT_ZOOM)
   }
 
