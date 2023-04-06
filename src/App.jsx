@@ -10,6 +10,8 @@ import DisplayTable from './DisplayTable'
 import FilterSection from './FilterSection'
 import EarthquakeMap from "./EarthquakeMap";
 import "./App.css";
+import L from 'leaflet'
+import { format } from "date-fns";
 
 export default function App() {
   const YEAR_START = "2022-01-01"
@@ -59,6 +61,7 @@ export default function App() {
       }
     })
     setCurrentlySelectedQuake("")
+    map.getPanes().tooltipPane.innerHTML = ''
     map.flyTo(MAP_CENTER, MAP_DEFAULT_ZOOM)
   }
 
@@ -103,8 +106,21 @@ export default function App() {
   function updateCurrentlySelectedQuake(clickedId) {
     const clickedQuake = dataset.find(d => d.id === clickedId)
     const latLng = [parseFloat(clickedQuake.lat), parseFloat(clickedQuake.long)]
-    map.flyTo(latLng, 11)
     setCurrentlySelectedQuake(clickedId)
+    map.flyTo(latLng, 11)
+    // clear any showing tooltips
+    map.getPanes().tooltipPane.innerHTML = ''
+    // add the tooltip for the selected earthquake
+    L.tooltip(latLng, { 
+      content: `<h5 class="color-main text-center">Magnitude: <span class="font-weight-bold">${clickedQuake.ml}</span></h5>
+      <hr />
+      <div>Date: <span class="font-weight-bold">${format(new Date(clickedQuake.date), 'dd/MM/yyyy')}</span></div>
+      <div>Time: <span class="font-weight-bold">${clickedQuake.time.split(":").slice(0,2).join(":")}</span></div>
+      <div>Location: <span class="font-weight-bold">${clickedQuake.locality}${clickedQuake.county && `, ${clickedQuake.county}`}</span></div>
+      <div>Depth: <span class="font-weight-bold">${clickedQuake.depth} km</span></div>`,
+      offset: [15,-30]
+    })
+    .addTo(map);    
   }
 
   return (
