@@ -4,7 +4,6 @@ import Table from 'react-bootstrap/Table';
 import { format } from "date-fns";
 
 function QuakeTable({ columns, data, setCurrentlySelectedQuake, currentlySelectedQuake }) {
-  // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
     getTableBodyProps,
@@ -19,7 +18,7 @@ function QuakeTable({ columns, data, setCurrentlySelectedQuake, currentlySelecte
     useSortBy
   )
 
-  // Render the UI for your table
+  // table UI
   return (
     <div className="table-container">
       <Table {...getTableProps()} size="sm" hover>
