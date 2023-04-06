@@ -13,12 +13,7 @@ export default function EarthquakeMap({ mapCenter, dataset, handleMapMove, setMa
         {dataset.map(point => (
           <Marker
             position={[point.lat, point.long]}
-            key={point.id}
-            eventHandlers={{
-              tooltipopen: () => {
-                console.log(point.id)
-              }
-            }}             
+            key={point.id}           
           >
             <Tooltip>
               <h5 className="color-main text-center">Magnitude: <span className="font-weight-bold">{point.ml}</span></h5>
