@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import data from './data'
 import Title from './Title'
 import Footer from "./Footer";
-import ResetAllFilters from "./ResetAllFilters";
+import ResetAllFilters from "./filters/ResetAllFilters";
 import DisplayTable from './DisplayTable'
 import FilterSection from './FilterSection'
 import EarthquakeMap from "./EarthquakeMap";
