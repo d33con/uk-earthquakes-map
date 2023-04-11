@@ -1,5 +1,5 @@
 import ReactSlider from 'react-slider'
-import './slider-styles.css';
+import '../slider-styles.css';
 
 export default function IntensitySlider(props) {
   return (
