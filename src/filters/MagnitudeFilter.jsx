@@ -1,20 +1,20 @@
 import { Fragment } from "react";
 import Button from 'react-bootstrap/Button'
-import IntensitySlider from './IntensitySlider'
+import MagnitudeSlider from './MagnitudeSlider'
 
-export default function IntensityFilter({ intensity, handleSetIntensity, resetIntensitySlider }) {
+export default function MagnitudeFilter({ magnitude, handleSetMagnitude, resetMagnitudeSlider }) {
   return (
     <Fragment>    
-      <h4 className="text-center color-main mb-3">Filter by intensity</h4>
+      <h4 className="text-center color-main mb-3">Filter by magnitude</h4>
       <div className="d-flex flex-row justify-content-center align-items-center">
         <small className="font-weight-light me-1">Min</small>        
-        <IntensitySlider
-          intensity={intensity}
-          handleSetIntensity={handleSetIntensity} />
+        <MagnitudeSlider
+          magnitude={magnitude}
+          handleSetMagnitude={handleSetMagnitude} />
         <small className="font-weight-light">Max</small>
       </div>
       <div className="text-center">
-        <Button onClick={resetIntensitySlider}>Reset</Button>
+        <Button onClick={resetMagnitudeSlider}>Reset</Button>
       </div>
     </Fragment>
   )

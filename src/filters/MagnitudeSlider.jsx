@@ -1,13 +1,13 @@
 import ReactSlider from 'react-slider'
 import '../slider-styles.css';
 
-export default function IntensitySlider(props) {
+export default function MagnitudeSlider(props) {
   return (
     <ReactSlider
-      className="intensity-slider"
-      thumbClassName="intensity-slider-thumb"
-      trackClassName="intensity-slider-track"
-      markClassName="intensity-slider-marks"
+      className="magnitude-slider"
+      thumbClassName="magnitude-slider-thumb"
+      trackClassName="magnitude-slider-track"
+      markClassName="magnitude-slider-marks"
       defaultValue={[0, 6]}
       ariaLabel={['Lower thumb', 'Upper thumb']}
       ariaValuetext={state => `Thumb value ${state.valueNow}`}
@@ -18,8 +18,8 @@ export default function IntensitySlider(props) {
       min={0}
       max={6}
       marks
-      onAfterChange={(value) => props.handleSetIntensity(value)}
-      value={props.intensity}
+      onAfterChange={(value) => props.handleSetMagnitude(value)}
+      value={props.magnitude}
     />
   );
 }

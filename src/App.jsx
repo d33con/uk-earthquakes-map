@@ -18,7 +18,7 @@ export default function App() {
   const YEAR_END = "2022-12-31"
   const MAP_CENTER = [56.047, -1.977]
   const MAP_DEFAULT_ZOOM = 6
-  const maxIntensity = Math.ceil(Math.max(...data.map(o => Number(o.ml))))
+  const maxMagnitude = Math.ceil(Math.max(...data.map(o => Number(o.ml))))
   const minLongitude = Math.min(...data.map(o => Number(o.long)))
   const maxLongitude = Math.max(...data.map(o => Number(o.long)))
   const minLatitude = Math.min(...data.map(o => Number(o.lat)))
@@ -32,7 +32,7 @@ export default function App() {
       startDate: YEAR_START,
       endDate: YEAR_END
     },
-    intensity: [0, maxIntensity],
+    magnitude: [0, maxMagnitude],
     location: "both",
     mapBounds: {
       maxLatitude,
@@ -51,7 +51,7 @@ export default function App() {
         startDate: YEAR_START,
         endDate: YEAR_END
       },
-      intensity: [0, maxIntensity],
+      magnitude: [0, maxMagnitude],
       location: "both",
       mapBounds: {
         maxLatitude,
@@ -66,7 +66,7 @@ export default function App() {
   }
 
   function filterDataset() {
-    const filteredDataset = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.intensity[0] && d.ml <= filters.intensity[1]) && (parseFloat(d.lat) < filters.mapBounds.maxLatitude && parseFloat(d.lat) > filters.mapBounds.minLatitude) && (parseFloat(d.long) < filters.mapBounds.maxLongitude && parseFloat(d.long) > filters.mapBounds.minLongitude))
+    const filteredDataset = data.filter(d => (d.date >= filters.date.startDate && d.date <= filters.date.endDate) && (d.ml >= filters.magnitude[0] && d.ml <= filters.magnitude[1]) && (parseFloat(d.lat) < filters.mapBounds.maxLatitude && parseFloat(d.lat) > filters.mapBounds.minLatitude) && (parseFloat(d.long) < filters.mapBounds.maxLongitude && parseFloat(d.long) > filters.mapBounds.minLongitude))
     if (filters.location === "land") {
       return setDataset(filteredDataset.filter(d => d.county !== ""))
     } else if (filters.location === "sea") {
@@ -91,12 +91,12 @@ export default function App() {
     setFilters(prevState => ({ ...prevState, location: evt.target.value }))
   }
 
-  function handleSetIntensity(valueArray) {
-    setFilters(prevState => ({ ...prevState, intensity: valueArray }))
+  function handleSetMagnitude(valueArray) {
+    setFilters(prevState => ({ ...prevState, magnitude: valueArray }))
   }
 
-  function resetIntensitySlider() {
-    setFilters(prevState => ({ ...prevState, intensity: [0, maxIntensity] }))
+  function resetMagnitudeSlider() {
+    setFilters(prevState => ({ ...prevState, magnitude: [0, maxMagnitude] }))
   }
 
   function handleMapMove(latLngObject) {
@@ -134,9 +134,9 @@ export default function App() {
         resetDates={resetDates}
         locationFilter={filters.location}
         handleLocationChange={handleLocationChange}
-        intensity={filters.intensity}
-        handleSetIntensity={handleSetIntensity}
-        resetIntensitySlider={resetIntensitySlider}
+        magnitude={filters.magnitude}
+        handleSetMagnitude={handleSetMagnitude}
+        resetMagnitudeSlider={resetMagnitudeSlider}
       />
       <ResetAllFilters
         resetFilters={resetFilters}

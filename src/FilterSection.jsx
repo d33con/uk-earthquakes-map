@@ -2,7 +2,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import DateFilter from './filters/DateFilter'
 import LocationFilter from './filters/LocationFilter'
-import IntensityFilter from './filters/IntensityFilter'
+import MagnitudeFilter from './filters/MagnitudeFilter'
 
 export default function FilterSection(props) {
   return (
@@ -23,10 +23,10 @@ export default function FilterSection(props) {
         />
       </Col>
       <Col>
-        <IntensityFilter
-          intensity={props.intensity}
-          handleSetIntensity={props.handleSetIntensity}
-          resetIntensitySlider={props.resetIntensitySlider}
+        <MagnitudeFilter
+          magnitude={props.magnitude}
+          handleSetMagnitude={props.handleSetMagnitude}
+          resetMagnitudeSlider={props.resetMagnitudeSlider}
         />      
       </Col>
     </Row>

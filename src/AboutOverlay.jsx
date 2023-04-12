@@ -11,7 +11,7 @@ const popover = (
         <h6>Filters</h6>
         <p>Set a date range using the date pickers</p>
         <p>Show land or sea earthquakes, or both locations</p>
-        <p>Use the slider to filter the earthquakes by intensity</p>
+        <p>Use the slider to filter the earthquakes by magnitude</p>
         <h6>Map</h6>
         <p>The list of earthquakes will update as the map is moved or zoomed</p>
         <h6>Table</h6>

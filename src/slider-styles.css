@@ -1,21 +1,21 @@
-.intensity-slider {
+.magnitude-slider {
   height: 46px;
   max-width: 300px;
   margin: 1rem 0.5rem 0 0.5rem;
   width: 100%;
 }
 
-.intensity-slider-track {
+.magnitude-slider-track {
   top: 8px;
   height: 4px;
   background: var(--background-blue);
 }
 
-.intensity-slider-track.intensity-slider-track-1 {
+.magnitude-slider-track.magnitude-slider-track-1 {
   background: var(--button-bg-purple);
 }
 
-.intensity-slider-thumb {
+.magnitude-slider-thumb {
   cursor: pointer;
   background: var(--button-bg-purple);
   width: 30px;
@@ -30,11 +30,11 @@
   transform: translate(-5px, -5px);
 }
 
-.intensity-slider-thumb:hover {
+.magnitude-slider-thumb:hover {
   box-shadow: 0 0 0 8px var(--text-purple-shadow);
 }
 
-.intensity-slider-marks {
+.magnitude-slider-marks {
   cursor: pointer;
   top: 3px;
   width: 3px;
