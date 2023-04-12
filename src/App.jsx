@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import data from './data'
 import Title from './Title'
 import Footer from "./Footer";
-import ResetAllFilters from "./filters/ResetAllFilters";
 import DisplayTable from './DisplayTable'
 import FilterSection from './FilterSection'
 import EarthquakeMap from "./EarthquakeMap";
@@ -137,12 +136,10 @@ export default function App() {
         magnitude={filters.magnitude}
         handleSetMagnitude={handleSetMagnitude}
         resetMagnitudeSlider={resetMagnitudeSlider}
-      />
-      <ResetAllFilters
         resetFilters={resetFilters}
         totalFiltered={dataset.length}
         totalEarthquakes={data.length}
-      />  
+      />
       <Row className="mb-4">
         <Col xs={12} xl={6} className="mb-4 mb-xl-0">
           <EarthquakeMap
