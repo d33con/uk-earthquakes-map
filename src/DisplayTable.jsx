@@ -1,9 +1,9 @@
-import React from "react"
-import { useTable, useSortBy } from 'react-table'
+import React from "react";
+import { useTable, useSortBy } from 'react-table';
 import Table from 'react-bootstrap/Table';
 import { format } from "date-fns";
 
-function QuakeTable({ columns, data, setCurrentlySelectedQuake, currentlySelectedQuake }) {
+function QuakeTable({ columns, data, updateCurrentlySelectedQuake, currentlySelectedQuake }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -16,7 +16,7 @@ function QuakeTable({ columns, data, setCurrentlySelectedQuake, currentlySelecte
       data,
     },
     useSortBy
-  )
+  );
 
   // table UI
   return (
@@ -38,19 +38,19 @@ function QuakeTable({ columns, data, setCurrentlySelectedQuake, currentlySelecte
         </thead>
         <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
-            prepareRow(row)
+            prepareRow(row);
             return (
               <tr
                 {...row.getRowProps()}
-                onClick={() => setCurrentlySelectedQuake(row.original.id)}
+                onClick={() => updateCurrentlySelectedQuake(row.original.id)}
                 id={row.original.id}
                 className={`pointer ${row.original.id === currentlySelectedQuake ? "selected" : ""}`}
               >
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
                 })}
               </tr>
-            )
+            );
           })}
         </tbody>
       </Table>
@@ -94,16 +94,16 @@ function DisplayTable(props) {
       },
     ],
     []
-  )
+  );
 
   return (
     <QuakeTable
       columns={columns}
       data={props.dataset}
-      setCurrentlySelectedQuake={props.setCurrentlySelectedQuake}
+      updateCurrentlySelectedQuake={props.updateCurrentlySelectedQuake}
       currentlySelectedQuake={props.currentlySelectedQuake}
     />
-  )
+  );
 }
 
-export default DisplayTable
+export default DisplayTable;
