@@ -1,5 +1,5 @@
 import ReactSlider from 'react-slider'
-import '../slider-styles.css';
+import '../styles/slider-styles.css';
 
 export default function MagnitudeSlider(props) {
   return (

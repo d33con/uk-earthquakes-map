@@ -1,8 +1,8 @@
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import EarthquakeMap from "./EarthquakeMap";
-import DisplayTable from './DisplayTable';
+import EarthquakeMap from "../map/EarthquakeMap";
+import DisplayTable from '../table/DisplayTable';
 
 export default function DataSection(props) {
   return (

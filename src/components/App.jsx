@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
-import data from './data';
+import data from '../data/earthquakeData';
 import Title from './Title';
 import Footer from "./Footer";
 import FilterSection from './FilterSection';
 import DataSection from "./DataSection";
-import "./App.css";
+import "../styles/App.css";
 import L from 'leaflet';
 import { format } from "date-fns";
 
