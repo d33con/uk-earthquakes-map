@@ -8,5 +8,5 @@ export default function Footer() {
         <a href="https://github.com/d33con" target="_blank">Oliver Bullen</a>
       </p>
     </Row>
-  )
+  );
 }

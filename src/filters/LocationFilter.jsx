@@ -1,7 +1,7 @@
 
-import { Fragment } from 'react'
-import ToggleButtonGroup from 'react-bootstrap/ButtonGroup'
-import ToggleButton from 'react-bootstrap/ToggleButton'
+import { Fragment } from 'react';
+import ToggleButtonGroup from 'react-bootstrap/ButtonGroup';
+import ToggleButton from 'react-bootstrap/ToggleButton';
 
 export default function LocationFilter({ locationFilter, handleLocationChange }) {
   const locationRadios = [
@@ -17,7 +17,7 @@ export default function LocationFilter({ locationFilter, handleLocationChange })
       buttonText: 'All',
       value: 'both'
     }
-  ]
+  ];
 
   return (
     <Fragment>
@@ -41,5 +41,5 @@ export default function LocationFilter({ locationFilter, handleLocationChange })
         </ToggleButtonGroup>
       </div> 
     </Fragment>
-  )
+  );
 }

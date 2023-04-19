@@ -1,7 +1,7 @@
-import { Fragment } from 'react'
-import Button from 'react-bootstrap/Button'
-import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css"
+import { Fragment } from 'react';
+import Button from 'react-bootstrap/Button';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function DateFilter({ startDate, endDate, setStartDate, setEndDate, resetDates }) {
   return (
@@ -10,10 +10,13 @@ export default function DateFilter({ startDate, endDate, setStartDate, setEndDat
       <div className="d-flex justify-content-center">
         <DatePicker
           selected={new Date(startDate)}
-          onChange={(date) => setStartDate(date.toISOString().split("T")[0])}
+          onChange={(date) => {
+            console.log(date, date.toISOString().split("T")[0])
+            setStartDate(date.toISOString().split("T")[0])
+          }}
           selectsStart
           startDate={startDate}
-          endDate={endDate}
+          // endDate={endDate}
           minDate={new Date("2022-01-01")}
           maxDate={new Date("2022-12-31")}
           dateFormat="dd/MM/yyyy"
@@ -24,7 +27,7 @@ export default function DateFilter({ startDate, endDate, setStartDate, setEndDat
           selected={new Date(endDate)}
           onChange={(date) => setEndDate(date.toISOString().split("T")[0])}
           selectsEnd
-          startDate={startDate}
+          // startDate={startDate}
           endDate={endDate}
           minDate={new Date("2022-01-01")}
           maxDate={new Date("2022-12-31")}
@@ -37,5 +40,5 @@ export default function DateFilter({ startDate, endDate, setStartDate, setEndDat
         <Button variant="primary" onClick={resetDates}>Reset</Button>  
       </div>
     </Fragment>
-  )
+  );
 }

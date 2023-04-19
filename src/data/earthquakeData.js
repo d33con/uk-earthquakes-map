@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
 const data = [
   {
@@ -4033,6 +4033,6 @@ const data = [
     "locality": "STRONTIAN",
     "county": "HIGHLAND"
   }
- ].map(quake => ({ id: uuidv4(), ...quake }))
+ ].map(quake => ({ id: uuidv4(), ...quake }));
 
- export default data
+ export default data;

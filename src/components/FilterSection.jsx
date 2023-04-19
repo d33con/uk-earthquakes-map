@@ -1,10 +1,10 @@
-import { Fragment } from 'react'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import DateFilter from '../filters/DateFilter'
-import LocationFilter from '../filters/LocationFilter'
-import MagnitudeFilter from '../filters/MagnitudeFilter'
-import ResetAllFilters from '../filters/ResetAllFilters'
+import { Fragment } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import DateFilter from '../filters/DateFilter';
+import LocationFilter from '../filters/LocationFilter';
+import MagnitudeFilter from '../filters/MagnitudeFilter';
+import ResetAllFilters from '../filters/ResetAllFilters';
 
 export default function FilterSection(props) {
   return (
@@ -39,6 +39,6 @@ export default function FilterSection(props) {
         totalEarthquakes={props.totalEarthquakes}
       />
     </Fragment>
-  )
+  );
 }
 

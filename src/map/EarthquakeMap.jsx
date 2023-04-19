@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import { format } from "date-fns";
-import MapMove from './MapMove'
+import MapMove from './MapMove';
 
 export default function EarthquakeMap({ mapCenter, dataset, handleMapMove, setMap, mapDefaultZoom }) {
   return (
@@ -26,5 +26,5 @@ export default function EarthquakeMap({ mapCenter, dataset, handleMapMove, setMa
           </Marker>
         ))}
     </MapContainer>
-  )
+  );
 }

@@ -15,6 +15,6 @@ export default function MapMove({ handleMapMove }) {
         minLongitude
       })
     }
-  })
-  return null
+  });
+  return null;
 }

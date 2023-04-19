@@ -27,5 +27,5 @@ export default function AboutOverlay() {
     <OverlayTrigger trigger={["hover", "focus"]} placement="right" overlay={popover}>
       <Button variant="primary" className="btn-about">?</Button>
     </OverlayTrigger>
-  )
+  );
 }

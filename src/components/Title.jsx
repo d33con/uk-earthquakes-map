@@ -10,5 +10,5 @@ export default function Title() {
       </h1>
       <hr />
     </Row>
-  )
+  );
 }

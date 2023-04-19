@@ -10,5 +10,5 @@ export default function ResetAllFilters({ resetFilters, totalEarthquakes, totalF
       </div>
       <hr />
     </Row> 
-  )
+  );
 }

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import Button from 'react-bootstrap/Button'
-import MagnitudeSlider from './MagnitudeSlider'
+import Button from 'react-bootstrap/Button';
+import MagnitudeSlider from './MagnitudeSlider';
 
 export default function MagnitudeFilter({ magnitude, handleSetMagnitude, resetMagnitudeSlider }) {
   return (
@@ -17,5 +17,5 @@ export default function MagnitudeFilter({ magnitude, handleSetMagnitude, resetMa
         <Button onClick={resetMagnitudeSlider}>Reset</Button>
       </div>
     </Fragment>
-  )
+  );
 }
