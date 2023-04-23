@@ -1,8 +1,8 @@
-
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import React from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import EarthquakeMap from "../map/EarthquakeMap";
-import DisplayTable from '../table/DisplayTable';
+import DisplayTable from "../table/DisplayTable";
 
 export default function DataSection(props) {
   return (
@@ -16,7 +16,7 @@ export default function DataSection(props) {
           mapDefaultZoom={props.mapDefaultZoom}
         />
       </Col>
-      <Col xs={12} xl={6}>        
+      <Col xs={12} xl={6}>
         <DisplayTable
           dataset={props.dataset}
           updateCurrentlySelectedQuake={props.updateCurrentlySelectedQuake}

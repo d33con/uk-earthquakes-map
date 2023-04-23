@@ -1,35 +1,47 @@
 import React from "react";
-import { useTable, useSortBy } from 'react-table';
-import Table from 'react-bootstrap/Table';
+import { useTable, useSortBy } from "react-table";
+import Table from "react-bootstrap/Table";
 import { format } from "date-fns";
 
-function QuakeTable({ columns, data, updateCurrentlySelectedQuake, currentlySelectedQuake }) {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable(
-    {
-      columns,
-      data,
-    },
-    useSortBy
-  );
+function QuakeTable({
+  columns,
+  data,
+  updateCurrentlySelectedQuake,
+  currentlySelectedQuake,
+}) {
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+      },
+      useSortBy
+    );
 
   // table UI
   return (
     <div className="table-container">
       <Table {...getTableProps()} size="sm" hover>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
+            //eslint-disable-next-line react/jsx-key
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  <span className={`sorting ${column.isSorted ? (column.isSortedDesc ? 'desc' : 'asc') : ''}`}>
-                    {column.isSorted && ' <'}
+              {headerGroup.headers.map((column) => (
+                <th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  key={column.id}
+                >
+                  {column.render("Header")}
+                  <span
+                    className={`sorting ${
+                      column.isSorted
+                        ? column.isSortedDesc
+                          ? "desc"
+                          : "asc"
+                        : ""
+                    }`}
+                  >
+                    {column.isSorted && " <"}
                   </span>
                 </th>
               ))}
@@ -37,17 +49,24 @@ function QuakeTable({ columns, data, updateCurrentlySelectedQuake, currentlySele
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <tr
                 {...row.getRowProps()}
                 onClick={() => updateCurrentlySelectedQuake(row.original.id)}
                 id={row.original.id}
-                className={`pointer ${row.original.id === currentlySelectedQuake ? "selected" : ""}`}
+                className={`pointer ${
+                  row.original.id === currentlySelectedQuake ? "selected" : ""
+                }`}
+                key={row.original.id}
               >
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                {row.cells.map((cell) => {
+                  return (
+                    <td key={cell.row.id} {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </td>
+                  );
                 })}
               </tr>
             );
@@ -55,42 +74,44 @@ function QuakeTable({ columns, data, updateCurrentlySelectedQuake, currentlySele
         </tbody>
       </Table>
     </div>
-  )
+  );
 }
 
 function DisplayTable(props) {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Date',
-        accessor: 'date',
-        Cell: (props) => (<span>{format(new Date(props.row.original.date), 'dd/MM/yyyy')}</span>)
+        Header: "Date",
+        accessor: "date",
+        Cell: (props) => (
+          <span>{format(new Date(props.row.original.date), "dd/MM/yyyy")}</span>
+        ),
       },
       {
-        Header: 'Time',
-        accessor: 'time',
+        Header: "Time",
+        accessor: "time",
         disableSortBy: true,
       },
       {
-        Header: 'Magnitude',
-        accessor: 'ml',
+        Header: "Magnitude",
+        accessor: "ml",
       },
       {
-        Header: 'Depth (km)',
-        accessor: 'depth',
+        Header: "Depth (km)",
+        accessor: "depth",
       },
       {
-        Header: 'Location',
-        accessor: 'locality',
+        Header: "Location",
+        accessor: "locality",
         Cell: (props) => {
-          let county
-          if(props.row.original.county) {
-            county = `, ${props.row.original.county}`
+          let county;
+          if (props.row.original.county) {
+            county = `, ${props.row.original.county}`;
           } else {
-            county = ""
+            county = "";
           }
-          return (<span>{`${props.row.original.locality}${county}`}</span>)
-        }
+          return <span>{`${props.row.original.locality}${county}`}</span>;
+        },
       },
     ],
     []

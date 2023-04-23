@@ -1,5 +1,6 @@
-import ReactSlider from 'react-slider';
-import '../styles/slider-styles.css';
+import React from "react";
+import ReactSlider from "react-slider";
+import "../styles/slider-styles.css";
 
 export default function MagnitudeSlider(props) {
   return (
@@ -9,8 +10,8 @@ export default function MagnitudeSlider(props) {
       trackClassName="magnitude-slider-track"
       markClassName="magnitude-slider-marks"
       defaultValue={[0, 6]}
-      ariaLabel={['Lower thumb', 'Upper thumb']}
-      ariaValuetext={state => `Thumb value ${state.valueNow}`}
+      ariaLabel={["Lower thumb", "Upper thumb"]}
+      ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
       renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
       pearling
       step={1}

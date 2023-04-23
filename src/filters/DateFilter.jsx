@@ -1,9 +1,15 @@
-import { Fragment } from 'react';
-import Button from 'react-bootstrap/Button';
-import DatePicker from 'react-datepicker';
+import React, { Fragment } from "react";
+import Button from "react-bootstrap/Button";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function DateFilter({ startDate, endDate, setStartDate, setEndDate, resetDates }) {
+export default function DateFilter({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+  resetDates,
+}) {
   return (
     <Fragment>
       <h4 className="text-center color-main mb-3">Filter by date</h4>
@@ -11,8 +17,8 @@ export default function DateFilter({ startDate, endDate, setStartDate, setEndDat
         <DatePicker
           selected={new Date(startDate)}
           onChange={(date) => {
-            console.log(date, date.toISOString().split("T")[0])
-            setStartDate(date.toISOString().split("T")[0])
+            console.log(date, date.toISOString().split("T")[0]);
+            setStartDate(date.toISOString().split("T")[0]);
           }}
           selectsStart
           startDate={startDate}
@@ -36,8 +42,10 @@ export default function DateFilter({ startDate, endDate, setStartDate, setEndDat
           openToDate={new Date(endDate)}
         />
       </div>
-      <div className="mt-3 text-center">        
-        <Button variant="primary" onClick={resetDates}>Reset</Button>  
+      <div className="mt-3 text-center">
+        <Button variant="primary" onClick={resetDates}>
+          Reset
+        </Button>
       </div>
     </Fragment>
   );

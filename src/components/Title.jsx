@@ -1,5 +1,6 @@
-import Row from 'react-bootstrap/Row';
-import AboutOverlay from './AboutOverlay';
+import React from "react";
+import Row from "react-bootstrap/Row";
+import AboutOverlay from "./AboutOverlay";
 
 export default function Title() {
   return (
