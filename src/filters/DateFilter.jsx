@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 
 export default function DateFilter({
   startDate,
@@ -16,13 +17,9 @@ export default function DateFilter({
       <div className="d-flex justify-content-center">
         <DatePicker
           selected={new Date(startDate)}
-          onChange={(date) => {
-            console.log(date, date.toISOString().split("T")[0]);
-            setStartDate(date.toISOString().split("T")[0]);
-          }}
+          onChange={(date) => setStartDate(format(date, "yyyy-MM-dd"))}
           selectsStart
           startDate={startDate}
-          // endDate={endDate}
           minDate={new Date("2022-01-01")}
           maxDate={new Date("2022-12-31")}
           dateFormat="dd/MM/yyyy"
@@ -31,9 +28,8 @@ export default function DateFilter({
         />
         <DatePicker
           selected={new Date(endDate)}
-          onChange={(date) => setEndDate(date.toISOString().split("T")[0])}
+          onChange={(date) => setEndDate(format(date, "yyyy-MM-dd"))}
           selectsEnd
-          // startDate={startDate}
           endDate={endDate}
           minDate={new Date("2022-01-01")}
           maxDate={new Date("2022-12-31")}
