@@ -15,6 +15,9 @@ export default function DateFilter({
     <Fragment>
       <h4 className="text-center color-main mb-3">Filter by date</h4>
       <div className="d-flex justify-content-center">
+        <label id="start-date" className="react-datepicker-label">
+          Start date
+        </label>
         <DatePicker
           selected={new Date(startDate)}
           onChange={(date) => setStartDate(format(date, "yyyy-MM-dd"))}
@@ -25,7 +28,12 @@ export default function DateFilter({
           dateFormat="dd/MM/yyyy"
           showMonthDropdown
           openToDate={new Date(startDate)}
+          name="startDate"
+          ariaLabelledBy="start-date"
         />
+        <label id="end-date" className="react-datepicker-label">
+          End date
+        </label>
         <DatePicker
           selected={new Date(endDate)}
           onChange={(date) => setEndDate(format(date, "yyyy-MM-dd"))}
@@ -36,6 +44,8 @@ export default function DateFilter({
           dateFormat="dd/MM/yyyy"
           showMonthDropdown
           openToDate={new Date(endDate)}
+          name="endDate"
+          ariaLabelledBy="end-date"
         />
       </div>
       <div className="mt-3 text-center">

@@ -9,4 +9,10 @@ describe("Title - rendering", () => {
     const titleText = screen.getByText(/Earthquakes in the UK 2022/i);
     expect(titleText).toBeInTheDocument();
   });
+
+  it("should render the AboutOverlay button", () => {
+    render(<Title />);
+    const button = screen.getByRole("button", { name: "?" });
+    expect(button).toBeInTheDocument();
+  });
 });
