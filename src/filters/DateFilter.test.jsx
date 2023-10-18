@@ -16,6 +16,16 @@ describe("DateFilter - rendering", () => {
     expect(dateInputs[0]).toHaveValue("01/01/2022");
     expect(dateInputs[1]).toHaveValue("31/12/2022");
   });
+
+  it("should render a Reset button", () => {
+    const startDate = "2022-01-01";
+    const endDate = "2022-12-31";
+    render(<DateFilter startDate={startDate} endDate={endDate} />);
+
+    const resetButton = screen.queryByTestId("reset-dates");
+
+    expect(resetButton).toBeInTheDocument();
+  });
 });
 
 describe("DateFilter - behaviour", () => {

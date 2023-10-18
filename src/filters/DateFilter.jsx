@@ -49,7 +49,11 @@ export default function DateFilter({
         />
       </div>
       <div className="mt-3 text-center">
-        <Button variant="primary" onClick={resetDates}>
+        <Button
+          variant="primary"
+          onClick={resetDates}
+          data-testid="reset-dates"
+        >
           Reset
         </Button>
       </div>
