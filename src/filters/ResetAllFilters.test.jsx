@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { it, describe, expect } from "vitest";
+import { userEvent } from "@testing-library/user-event";
+import { it, describe, expect, vi } from "vitest";
 import ResetAllFilters from "./ResetAllFilters";
 import React from "react";
 
@@ -37,5 +38,24 @@ describe("ResetAllFilters - rendering", () => {
     expect(headingElement).toHaveTextContent(
       `Showing ${totalFiltered} of ${totalEarthquakes} total earthquakes`
     );
+  });
+});
+
+describe("ResetAllFilters - behaviour", () => {
+  it("should call the resetFilters function when Show All button is clicked", async () => {
+    const resetHandler = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <ResetAllFilters
+        totalFiltered={10}
+        totalEarthquakes={20}
+        resetFilters={resetHandler}
+      />
+    );
+
+    const showAllButton = screen.getByRole("button", { name: "Show all" });
+    await user.click(showAllButton);
+
+    expect(resetHandler).toHaveBeenCalledOnce();
   });
 });

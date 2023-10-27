@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import { it, describe, expect } from "vitest";
-// import userEvent from "@testing-library/user-event";
 import LocationFilter from "./LocationFilter";
 import React from "react";
 

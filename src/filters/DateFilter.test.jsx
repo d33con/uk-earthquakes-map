@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { it, describe, expect } from "vitest";
+import { it, describe, expect, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import DateFilter from "./DateFilter";
 import React from "react";
@@ -55,5 +55,25 @@ describe("DateFilter - behaviour", () => {
     expect(
       screen.getByRole("listbox", { name: "month 2022-12" })
     ).toBeInTheDocument();
+  });
+
+  it("should call the reset function when the button is clicked", async () => {
+    const resetDates = vi.fn();
+    const startDate = "2022-01-01";
+    const endDate = "2022-12-31";
+    render(
+      <DateFilter
+        startDate={startDate}
+        endDate={endDate}
+        resetDates={resetDates}
+      />
+    );
+
+    const resetButton = screen.queryByTestId("reset-dates");
+
+    const user = userEvent.setup();
+    await user.click(resetButton);
+
+    expect(resetDates).toHaveBeenCalledOnce();
   });
 });

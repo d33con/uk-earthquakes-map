@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { it, describe, expect } from "vitest";
-// import userEvent from "@testing-library/user-event";
+import { it, describe, expect, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
 import MagnitudeFilter from "./MagnitudeFilter";
 import React from "react";
 
@@ -19,5 +19,21 @@ describe("MagnitudeFilter - rendering", () => {
     const resetButton = screen.queryByTestId("reset-magnitude");
 
     expect(resetButton).toBeInTheDocument();
+  });
+});
+
+describe("MagnitudeFilter - behaviour", () => {
+  it("should call the resetMagnitudeSlider function when the reset button is clicked", async () => {
+    const resetSlider = vi.fn();
+    render(<MagnitudeFilter resetMagnitudeSlider={resetSlider} />);
+
+    const resetButton = screen.queryByTestId("reset-magnitude");
+
+    console.log(resetButton);
+
+    const user = userEvent.setup();
+    await user.click(resetButton);
+
+    expect(resetSlider).toHaveBeenCalledOnce();
   });
 });
