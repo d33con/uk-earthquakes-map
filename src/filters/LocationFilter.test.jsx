@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { it, describe, expect } from "vitest";
+import { it, describe, expect, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
 import LocationFilter from "./LocationFilter";
 import React from "react";
 
@@ -40,5 +41,26 @@ describe("LocationFilter - rendering", () => {
     });
 
     expect(seaRadioButton).toBeChecked();
+  });
+});
+
+describe("LocationFilter - behaviour", () => {
+  it("should call the location change function when a button is clicked", async () => {
+    const handleLocationChange = vi.fn();
+
+    render(
+      <LocationFilter
+        locationFilter="land"
+        handleLocationChange={handleLocationChange}
+      />
+    );
+
+    const seaRadioButton = screen.getByRole("radio", {
+      name: "Off-shore",
+    });
+    const user = userEvent.setup();
+    await user.click(seaRadioButton);
+
+    expect(handleLocationChange).toHaveBeenCalledOnce();
   });
 });
