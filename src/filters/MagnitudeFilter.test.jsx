@@ -29,8 +29,6 @@ describe("MagnitudeFilter - behaviour", () => {
 
     const resetButton = screen.queryByTestId("reset-magnitude");
 
-    console.log(resetButton);
-
     const user = userEvent.setup();
     await user.click(resetButton);
 
