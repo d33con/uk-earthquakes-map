@@ -32,10 +32,10 @@ describe("DateFilter - behaviour", () => {
   it("should show the datepicker when the start date input is clicked", async () => {
     const startDate = "2022-01-01";
     const endDate = "2022-12-31";
+    const user = userEvent.setup();
     render(<DateFilter startDate={startDate} endDate={endDate} />);
 
     const startDateLabel = screen.getByLabelText("Start date");
-    const user = userEvent.setup();
     await user.click(startDateLabel);
 
     expect(
@@ -46,10 +46,10 @@ describe("DateFilter - behaviour", () => {
   it("should show the datepicker when the end date input is clicked", async () => {
     const startDate = "2022-01-01";
     const endDate = "2022-12-31";
+    const user = userEvent.setup();
     render(<DateFilter startDate={startDate} endDate={endDate} />);
 
     const endDateLabel = screen.getByLabelText("End date");
-    const user = userEvent.setup();
     await user.click(endDateLabel);
 
     expect(
@@ -61,6 +61,7 @@ describe("DateFilter - behaviour", () => {
     const resetDates = vi.fn();
     const startDate = "2022-01-01";
     const endDate = "2022-12-31";
+    const user = userEvent.setup();
     render(
       <DateFilter
         startDate={startDate}
@@ -71,7 +72,6 @@ describe("DateFilter - behaviour", () => {
 
     const resetButton = screen.queryByTestId("reset-dates");
 
-    const user = userEvent.setup();
     await user.click(resetButton);
 
     expect(resetDates).toHaveBeenCalledOnce();

@@ -47,7 +47,7 @@ describe("LocationFilter - rendering", () => {
 describe("LocationFilter - behaviour", () => {
   it("should call the location change function when a button is clicked", async () => {
     const handleLocationChange = vi.fn();
-
+    const user = userEvent.setup();
     render(
       <LocationFilter
         locationFilter="land"
@@ -58,7 +58,6 @@ describe("LocationFilter - behaviour", () => {
     const seaRadioButton = screen.getByRole("radio", {
       name: "Off-shore",
     });
-    const user = userEvent.setup();
     await user.click(seaRadioButton);
 
     expect(handleLocationChange).toHaveBeenCalledOnce();

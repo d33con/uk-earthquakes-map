@@ -43,8 +43,8 @@ describe("ResetAllFilters - rendering", () => {
 
 describe("ResetAllFilters - behaviour", () => {
   it("should call the resetFilters function when Show All button is clicked", async () => {
-    const resetHandler = vi.fn();
     const user = userEvent.setup();
+    const resetHandler = vi.fn();
     render(
       <ResetAllFilters
         totalFiltered={10}

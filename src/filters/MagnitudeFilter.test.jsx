@@ -24,12 +24,12 @@ describe("MagnitudeFilter - rendering", () => {
 
 describe("MagnitudeFilter - behaviour", () => {
   it("should call the resetMagnitudeSlider function when the reset button is clicked", async () => {
+    const user = userEvent.setup();
     const resetSlider = vi.fn();
     render(<MagnitudeFilter resetMagnitudeSlider={resetSlider} />);
 
     const resetButton = screen.queryByTestId("reset-magnitude");
 
-    const user = userEvent.setup();
     await user.click(resetButton);
 
     expect(resetSlider).toHaveBeenCalledOnce();

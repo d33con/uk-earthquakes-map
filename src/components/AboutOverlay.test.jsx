@@ -11,17 +11,17 @@ import React from "react";
 
 describe("About Overlay - behaviour", () => {
   it("should display a popover when the button is hovered", async () => {
+    const user = userEvent.setup();
     render(<AboutOverlay />);
     const button = screen.getByRole("button", { name: "?" });
-    const user = userEvent.setup();
     await user.hover(button);
     expect(screen.getByRole("tooltip")).toBeInTheDocument();
   });
 
   it("should display a popover with placement to the right when the button is hovered", async () => {
+    const user = userEvent.setup();
     render(<AboutOverlay />);
     const button = screen.getByRole("button", { name: "?" });
-    const user = userEvent.setup();
     await user.hover(button);
     expect(screen.getByRole("tooltip")).toBeInTheDocument();
     expect(screen.getByRole("tooltip")).toHaveAttribute(
@@ -31,9 +31,9 @@ describe("About Overlay - behaviour", () => {
   });
 
   it("should remove the popover when the cursor leaves the button after showing", async () => {
+    const user = userEvent.setup();
     render(<AboutOverlay />);
     const button = screen.getByRole("button", { name: "?" });
-    const user = userEvent.setup();
     await user.hover(button);
     expect(screen.getByRole("tooltip")).toBeInTheDocument();
     fireEvent.mouseLeave(button);

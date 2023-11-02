@@ -98,6 +98,7 @@ describe("DisplayTable - rendering", () => {
 
 describe("DisplayTable - behaviour", () => {
   it("should call the updateCurrentlySelectedQuake function when a row in the table is clicked", async () => {
+    const user = userEvent.setup();
     const { container } = render(
       <DisplayTable
         dataset={mockDataset}
@@ -108,7 +109,6 @@ describe("DisplayTable - behaviour", () => {
 
     const tableRow = container.querySelector(".pointer");
 
-    const user = userEvent.setup();
     await user.click(tableRow);
 
     expect(updateCurrentlySelectedQuake).toHaveBeenCalledOnce();
