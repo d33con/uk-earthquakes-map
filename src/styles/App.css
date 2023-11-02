@@ -73,6 +73,10 @@ hr {
   text-align: center;
 }
 
+.react-datepicker-label {
+  min-width: 100px;
+}
+
 .react-datepicker-wrapper input {
   max-width: 175px;
 }

@@ -19,7 +19,9 @@ export default function MagnitudeFilter({
         <small className="font-weight-light">Max</small>
       </div>
       <div className="text-center">
-        <Button onClick={resetMagnitudeSlider}>Reset</Button>
+        <Button onClick={resetMagnitudeSlider} data-testid="reset-magnitude">
+          Reset
+        </Button>
       </div>
     </Fragment>
   );

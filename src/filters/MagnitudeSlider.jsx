@@ -10,7 +10,7 @@ export default function MagnitudeSlider(props) {
       trackClassName="magnitude-slider-track"
       markClassName="magnitude-slider-marks"
       defaultValue={[0, 6]}
-      ariaLabel={["Lower thumb", "Upper thumb"]}
+      ariaLabel={["Minimum magnitude", "Maximum magnitude"]}
       ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
       renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
       pearling
