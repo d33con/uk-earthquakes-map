@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --fix . --ext .js,.jsx",
-    "test": "vitest"
+    "test": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "date-fns": "^2.29.3",
@@ -29,6 +30,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
+    "@vitest/ui": "^0.34.6",
     "eslint": "^8.39.0",
     "eslint-plugin-react": "^7.32.2",
     "jsdom": "^22.1.0",
