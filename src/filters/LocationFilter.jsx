@@ -1,34 +1,30 @@
-import React, { Fragment } from "react";
+import React from "react";
 import ToggleButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 
+const locationRadios = [
+  {
+    buttonText: "On-shore",
+    value: "land",
+  },
+  {
+    buttonText: "Off-shore",
+    value: "sea",
+  },
+  {
+    buttonText: "All",
+    value: "both",
+  },
+];
 export default function LocationFilter({
   locationFilter,
   handleLocationChange,
 }) {
-  const locationRadios = [
-    {
-      buttonText: "On-shore",
-      value: "land",
-    },
-    {
-      buttonText: "Off-shore",
-      value: "sea",
-    },
-    {
-      buttonText: "All",
-      value: "both",
-    },
-  ];
-
   return (
-    <Fragment>
+    <>
       <h4 className="text-center color-main mb-3">Filter by location</h4>
       <div className="d-flex justify-content-center">
-        <ToggleButtonGroup
-          className="mb-2"
-          onChange={(evt) => handleLocationChange(evt)}
-        >
+        <ToggleButtonGroup className="mb-2" onChange={handleLocationChange}>
           {locationRadios.map((location) => (
             <ToggleButton
               key={location.value}
@@ -44,6 +40,6 @@ export default function LocationFilter({
           ))}
         </ToggleButtonGroup>
       </div>
-    </Fragment>
+    </>
   );
 }

@@ -1,26 +1,25 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import L from "leaflet";
+import { format } from "date-fns";
 import Container from "react-bootstrap/Container";
-import data from "../data/earthquakeData";
 import Title from "./Title";
 import Footer from "./Footer";
 import FilterSection from "./FilterSection";
 import DataSection from "./DataSection";
 import "../styles/App.css";
-import L from "leaflet";
-import { format } from "date-fns";
+import data from "../data/earthquakeData";
+
+const YEAR_START = "2022-01-01";
+const YEAR_END = "2022-12-31";
+const MAP_CENTER = [56.047, -1.977];
+const MAP_DEFAULT_ZOOM = 6;
+const maxMagnitude = Math.ceil(Math.max(...data.map((o) => Number(o.ml))));
+const minLongitude = Math.min(...data.map((o) => Number(o.long)));
+const maxLongitude = Math.max(...data.map((o) => Number(o.long)));
+const minLatitude = Math.min(...data.map((o) => Number(o.lat)));
+const maxLatitude = Math.max(...data.map((o) => Number(o.lat)));
 
 export default function App() {
-  const YEAR_START = "2022-01-01";
-  const YEAR_END = "2022-12-31";
-  const MAP_CENTER = [56.047, -1.977];
-  const MAP_DEFAULT_ZOOM = 6;
-  const maxMagnitude = Math.ceil(Math.max(...data.map((o) => Number(o.ml))));
-  const minLongitude = Math.min(...data.map((o) => Number(o.long)));
-  const maxLongitude = Math.max(...data.map((o) => Number(o.long)));
-  const minLatitude = Math.min(...data.map((o) => Number(o.lat)));
-  const maxLatitude = Math.max(...data.map((o) => Number(o.lat)));
-
   const [map, setMap] = useState(null);
   const [currentlySelectedQuake, setCurrentlySelectedQuake] = useState("");
   const [dataset, setDataset] = useState(data);
@@ -83,16 +82,18 @@ export default function App() {
   }
 
   function handleStartDateChange(newDate) {
+    const formattedDate = format(newDate, "yyyy-MM-dd");
     setFilters((prevState) => ({
       ...prevState,
-      date: { startDate: newDate, endDate: prevState.date.endDate },
+      date: { startDate: formattedDate, endDate: prevState.date.endDate },
     }));
   }
 
   function handleEndDateChange(newDate) {
+    const formattedDate = format(newDate, "yyyy-MM-dd");
     setFilters((prevState) => ({
       ...prevState,
-      date: { startDate: prevState.date.startDate, endDate: newDate },
+      date: { startDate: prevState.date.startDate, endDate: formattedDate },
     }));
   }
 
@@ -159,8 +160,10 @@ export default function App() {
       <FilterSection
         startDate={filters.date.startDate}
         setStartDate={handleStartDateChange}
+        minDate={YEAR_START}
         endDate={filters.date.endDate}
         setEndDate={handleEndDateChange}
+        maxDate={YEAR_END}
         resetDates={resetDates}
         locationFilter={filters.location}
         handleLocationChange={handleLocationChange}
