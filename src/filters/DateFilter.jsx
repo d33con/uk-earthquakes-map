@@ -1,18 +1,19 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
 
 export default function DateFilter({
   startDate,
   endDate,
   setStartDate,
   setEndDate,
+  minDate,
+  maxDate,
   resetDates,
 }) {
   return (
-    <Fragment>
+    <>
       <h4 className="text-center color-main mb-3">Filter by date</h4>
       <div className="d-flex justify-content-center">
         <label id="start-date" className="react-datepicker-label">
@@ -20,11 +21,11 @@ export default function DateFilter({
         </label>
         <DatePicker
           selected={new Date(startDate)}
-          onChange={(date) => setStartDate(format(date, "yyyy-MM-dd"))}
+          onChange={(date) => setStartDate(date)}
           selectsStart
           startDate={startDate}
-          minDate={new Date("2022-01-01")}
-          maxDate={new Date("2022-12-31")}
+          minDate={new Date(minDate)}
+          maxDate={new Date(maxDate)}
           dateFormat="dd/MM/yyyy"
           showMonthDropdown
           openToDate={new Date(startDate)}
@@ -36,11 +37,11 @@ export default function DateFilter({
         </label>
         <DatePicker
           selected={new Date(endDate)}
-          onChange={(date) => setEndDate(format(date, "yyyy-MM-dd"))}
+          onChange={(date) => setEndDate(date)}
           selectsEnd
           endDate={endDate}
-          minDate={new Date("2022-01-01")}
-          maxDate={new Date("2022-12-31")}
+          minDate={new Date(minDate)}
+          maxDate={new Date(maxDate)}
           dateFormat="dd/MM/yyyy"
           showMonthDropdown
           openToDate={new Date(endDate)}
@@ -57,6 +58,6 @@ export default function DateFilter({
           Reset
         </Button>
       </div>
-    </Fragment>
+    </>
   );
 }
