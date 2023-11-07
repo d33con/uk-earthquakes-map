@@ -23,9 +23,8 @@ function QuakeTable({
     <div className="table-container">
       <Table {...getTableProps()} size="sm" hover>
         <thead>
-          {headerGroups.map((headerGroup) => (
-            //eslint-disable-next-line react/jsx-key
-            <tr {...headerGroup.getHeaderGroupProps()}>
+          {headerGroups.map((headerGroup, idx) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={idx}>
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
