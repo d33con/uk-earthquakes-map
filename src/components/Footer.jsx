@@ -9,12 +9,16 @@ export default function Footer() {
         <a
           href="https://earthquakes.bgs.ac.uk/earthquakes/home.html"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           BGS
         </a>{" "}
         - by{" "}
-        <a href="https://github.com/d33con" target="_blank" rel="noreferrer">
+        <a
+          href="https://github.com/d33con"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Oliver Bullen
         </a>
       </p>
