@@ -2,7 +2,7 @@ import React from "react";
 import ReactSlider from "react-slider";
 import "../styles/slider-styles.css";
 
-export default function MagnitudeSlider(props) {
+export default function MagnitudeSlider({ magnitude, handleSetMagnitude }) {
   return (
     <ReactSlider
       className="magnitude-slider"
@@ -19,8 +19,8 @@ export default function MagnitudeSlider(props) {
       min={0}
       max={6}
       marks
-      onAfterChange={(value) => props.handleSetMagnitude(value)}
-      value={props.magnitude}
+      onAfterChange={(value) => handleSetMagnitude(value)}
+      value={magnitude}
     />
   );
 }
