@@ -142,12 +142,12 @@ export default function App() {
         .split(":")
         .slice(0, 2)
         .join(":")}</span></div>
+        <div>Depth: <span class="font-weight-bold">${
+          clickedQuake.depth
+        } km</span></div>
       <div>Location: <span class="font-weight-bold">${clickedQuake.locality}${
         clickedQuake.county && `, ${clickedQuake.county}`
-      }</span></div>
-      <div>Depth: <span class="font-weight-bold">${
-        clickedQuake.depth
-      } km</span></div>`,
+      }</span></div>`,
       offset: [15, -30],
     }).addTo(map);
   }
