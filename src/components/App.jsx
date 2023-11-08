@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from "react";
-import L from "leaflet";
 import { format } from "date-fns";
+import L from "leaflet";
+import React, { useMemo, useState } from "react";
 import Container from "react-bootstrap/Container";
-import Title from "./Title";
-import Footer from "./Footer";
-import FilterSection from "./FilterSection";
-import DataSection from "./DataSection";
+import initialData from "../data/earthquakeData";
 import "../styles/App.css";
-import data from "../data/earthquakeData";
+import DataSection from "./DataSection";
+import FilterSection from "./FilterSection";
+import Footer from "./Footer";
+import Title from "./Title";
 
 const YEAR_START = "2022-01-01";
 const YEAR_END = "2022-12-31";
 const MAP_CENTER = [56.047, -1.977];
 const MAP_DEFAULT_ZOOM = 6;
-const maxMagnitude = Math.ceil(Math.max(...data.map((o) => Number(o.ml))));
-const minLongitude = Math.min(...data.map((o) => Number(o.long)));
-const maxLongitude = Math.max(...data.map((o) => Number(o.long)));
-const minLatitude = Math.min(...data.map((o) => Number(o.lat)));
-const maxLatitude = Math.max(...data.map((o) => Number(o.lat)));
+const maxMagnitude = Math.ceil(
+  Math.max(...initialData.map((o) => Number(o.ml)))
+);
+const minLongitude = Math.min(...initialData.map((o) => Number(o.long)));
+const maxLongitude = Math.max(...initialData.map((o) => Number(o.long)));
+const minLatitude = Math.min(...initialData.map((o) => Number(o.lat)));
+const maxLatitude = Math.max(...initialData.map((o) => Number(o.lat)));
 
 export default function App() {
   const [map, setMap] = useState(null);
   const [currentlySelectedQuake, setCurrentlySelectedQuake] = useState("");
-  const [dataset, setDataset] = useState(data);
   const [filters, setFilters] = useState({
     date: {
       startDate: YEAR_START,
@@ -38,10 +39,7 @@ export default function App() {
     },
   });
 
-  useEffect(() => filterDataset(), [filters]);
-
   function resetFilters() {
-    setDataset(data);
     setFilters({
       date: {
         startDate: YEAR_START,
@@ -61,25 +59,25 @@ export default function App() {
     map.flyTo(MAP_CENTER, MAP_DEFAULT_ZOOM);
   }
 
-  function filterDataset() {
-    const filteredDataset = data.filter(
+  const dataset = useMemo(() => {
+    const filteredDataset = initialData.filter(
       (d) =>
         d.date >= filters.date.startDate &&
         d.date <= filters.date.endDate &&
         d.ml >= filters.magnitude[0] &&
         d.ml <= filters.magnitude[1] &&
-        parseFloat(d.lat) < filters.mapBounds.maxLatitude &&
-        parseFloat(d.lat) > filters.mapBounds.minLatitude &&
-        parseFloat(d.long) < filters.mapBounds.maxLongitude &&
-        parseFloat(d.long) > filters.mapBounds.minLongitude
+        parseFloat(d.lat) <= filters.mapBounds.maxLatitude &&
+        parseFloat(d.lat) >= filters.mapBounds.minLatitude &&
+        parseFloat(d.long) <= filters.mapBounds.maxLongitude &&
+        parseFloat(d.long) >= filters.mapBounds.minLongitude
     );
     if (filters.location === "land") {
-      return setDataset(filteredDataset.filter((d) => d.county !== ""));
+      return filteredDataset.filter((d) => d.county !== "");
     } else if (filters.location === "sea") {
-      return setDataset(filteredDataset.filter((d) => d.county === ""));
+      return filteredDataset.filter((d) => d.county === "");
     }
-    return setDataset(filteredDataset);
-  }
+    return filteredDataset;
+  }, [filters]);
 
   function handleStartDateChange(newDate) {
     const formattedDate = format(newDate, "yyyy-MM-dd");
@@ -172,7 +170,7 @@ export default function App() {
         resetMagnitudeSlider={resetMagnitudeSlider}
         resetFilters={resetFilters}
         totalFiltered={dataset.length}
-        totalEarthquakes={data.length}
+        totalEarthquakes={initialData.length}
       />
       <DataSection
         mapCenter={MAP_CENTER}

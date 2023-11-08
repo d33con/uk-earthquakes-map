@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-const data = [
+const initialData = [
   {
     date: "2022-01-01",
     time: "05:05:44",
@@ -4035,4 +4035,4 @@ const data = [
   },
 ].map((quake) => ({ id: uuidv4(), ...quake }));
 
-export default data;
+export default initialData;
