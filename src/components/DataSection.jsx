@@ -4,23 +4,33 @@ import Col from "react-bootstrap/Col";
 import EarthquakeMap from "../map/EarthquakeMap";
 import DisplayTable from "../table/DisplayTable";
 
-export default function DataSection(props) {
+export default function DataSection({
+  mapCenter,
+  mapDefaultZoom,
+  setMap,
+  dataset,
+  handleMapMove,
+  updateCurrentlySelectedQuake,
+  currentlySelectedQuake,
+}) {
   return (
     <Row className="mb-4">
       <Col xs={12} xl={6} className="mb-4 mb-xl-0">
         <EarthquakeMap
-          mapCenter={props.mapCenter}
-          dataset={props.dataset}
-          handleMapMove={props.handleMapMove}
-          setMap={props.setMap}
-          mapDefaultZoom={props.mapDefaultZoom}
+          mapCenter={mapCenter}
+          dataset={dataset}
+          handleMapMove={handleMapMove}
+          setMap={setMap}
+          mapDefaultZoom={mapDefaultZoom}
+          updateCurrentlySelectedQuake={updateCurrentlySelectedQuake}
+          currentlySelectedQuake={currentlySelectedQuake}
         />
       </Col>
       <Col xs={12} xl={6}>
         <DisplayTable
-          dataset={props.dataset}
-          updateCurrentlySelectedQuake={props.updateCurrentlySelectedQuake}
-          currentlySelectedQuake={props.currentlySelectedQuake}
+          dataset={dataset}
+          updateCurrentlySelectedQuake={updateCurrentlySelectedQuake}
+          currentlySelectedQuake={currentlySelectedQuake}
         />
       </Col>
     </Row>
