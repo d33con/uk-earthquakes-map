@@ -1,10 +1,10 @@
 import { render, screen, within } from "@testing-library/react";
-import { it, describe, expect } from "vitest";
 import { userEvent } from "@testing-library/user-event";
-import App from "./App";
-import React from "react";
-import data from "../data/earthquakeData";
 import format from "date-fns/format";
+import React from "react";
+import { describe, expect, it } from "vitest";
+import data from "../data/earthquakeData";
+import App from "./App";
 
 describe("App - rendering", () => {
   it("should render a map", async () => {
@@ -20,7 +20,7 @@ describe("App - rendering", () => {
 
     const markers = container.querySelectorAll(".leaflet-marker-icon");
 
-    expect(markers).toHaveLength(285);
+    expect(markers).toHaveLength(data.length);
   });
 
   it("should render a table with the correct number of rows", () => {
@@ -28,7 +28,7 @@ describe("App - rendering", () => {
 
     const tableRows = container.querySelectorAll(".pointer");
 
-    expect(tableRows).toHaveLength(285);
+    expect(tableRows).toHaveLength(data.length);
   });
 
   it("should render a tooltip when a marker is hovered", async () => {
