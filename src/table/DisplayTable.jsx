@@ -82,9 +82,8 @@ function DisplayTable(props) {
       {
         Header: "Date",
         accessor: "date",
-        Cell: (props) => (
-          <span>{format(new Date(props.row.original.date), "dd/MM/yyyy")}</span>
-        ),
+        Cell: (props) =>
+          format(new Date(props.row.original.date), "dd/MM/yyyy"),
       },
       {
         Header: "Time",
@@ -109,7 +108,7 @@ function DisplayTable(props) {
           } else {
             county = "";
           }
-          return <span>{`${props.row.original.locality}${county}`}</span>;
+          return `${props.row.original.locality}${county}`;
         },
       },
     ],
