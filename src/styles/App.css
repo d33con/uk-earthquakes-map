@@ -124,6 +124,6 @@ table tr.pointer {
   cursor: pointer;
 }
 
-table tr.pointer.selected {
+table tr.pointer.selected > td {
   background-color: var(--text-purple-faded);
 }
