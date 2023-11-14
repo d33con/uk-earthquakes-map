@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import format from "date-fns/format";
 import React from "react";
@@ -85,5 +85,136 @@ describe("App - rendering", () => {
       `${data[1].locality}, ${data[1].county}`
     );
     expect(localityAndCountyText).toBeInTheDocument();
+  });
+});
+
+describe("App - behaviour", () => {
+  it("should filter the earthquakes by start date", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    const startDateLabel = screen.getByLabelText("Start date");
+    await user.click(startDateLabel);
+
+    const firstOfFeb = screen.getByRole("option", {
+      name: /Choose Tuesday, February 1st, 2022/i,
+    });
+    await user.click(firstOfFeb);
+
+    const markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() =>
+      expect(markers).toHaveLength(
+        data.filter((d) => d.date >= "2022-02-01").length
+      )
+    );
+  });
+
+  it("should filter the earthquakes by end date", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    const endDateLabel = screen.getByLabelText("End date");
+    await user.click(endDateLabel);
+
+    const firstOfDec = screen.getByRole("option", {
+      name: /Choose Thursday, December 1st, 2022/i,
+    });
+    await user.click(firstOfDec);
+
+    const markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() =>
+      expect(markers).toHaveLength(
+        data.filter((d) => d.date <= "2022-12-01").length
+      )
+    );
+  });
+
+  it("should reset the list aftering filtering the earthquakes by date", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    const startDateLabel = screen.getByLabelText("Start date");
+    await user.click(startDateLabel);
+
+    const firstOfFeb = screen.getByRole("option", {
+      name: /Choose Tuesday, February 1st, 2022/i,
+    });
+    await user.click(firstOfFeb);
+
+    let markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() =>
+      expect(markers).toHaveLength(
+        data.filter((d) => d.date >= "2022-02-01").length
+      )
+    );
+
+    const dateResetButton = screen.queryByTestId("reset-dates");
+
+    await user.click(dateResetButton);
+
+    markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() => expect(markers).toHaveLength(data.length));
+  });
+
+  it("should filter the earthquakes by location for land", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    const onShoreButton = screen.getByRole("radio", {
+      name: /on-shore/i,
+    });
+
+    await user.click(onShoreButton);
+    const markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() =>
+      expect(markers).toHaveLength(data.filter((d) => d.county !== "").length)
+    );
+  });
+
+  it("should filter the earthquakes by location for sea", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    const offShoreButton = screen.getByRole("radio", {
+      name: /off-shore/i,
+    });
+
+    await user.click(offShoreButton);
+    const markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() =>
+      expect(markers).toHaveLength(data.filter((d) => d.county === "").length)
+    );
+  });
+
+  it("should reset the list aftering filtering the earthquakes by location", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    const offShoreButton = screen.getByRole("radio", {
+      name: /off-shore/i,
+    });
+
+    await user.click(offShoreButton);
+    let markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() =>
+      expect(markers).toHaveLength(data.filter((d) => d.county === "").length)
+    );
+
+    const locationResetButton = screen.getByRole("radio", {
+      name: /all/i,
+    });
+
+    await user.click(locationResetButton);
+
+    markers = container.querySelectorAll(".leaflet-marker-icon");
+
+    await waitFor(() => expect(markers).toHaveLength(data.length));
   });
 });
