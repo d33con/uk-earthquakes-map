@@ -21,3 +21,4 @@
 
 - React
 - Leaflet
+- Vitest
